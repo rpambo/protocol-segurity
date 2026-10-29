@@ -1,0 +1,40 @@
+<div class="member-shell">
+  <aside class="member-sidebar">
+    <a class="member-brand" routerLink="/portal">
+      <img src="imagem/logo.png" width="48" alt="logo spirit embassy">
+      <span><strong>SPIRIT EMBASSY</strong><small>MEMBER PORTAL</small></span>
+    </a>
+    <div class="member-context"><span class="context-mark">G</span><span><strong>The Goodnews World</strong><small>Lagos Central Branch</small></span><span class="context-chevron">⌄</span></div>
+    <div class="member-nav-title">YOUR COMMUNITY</div>
+    <nav class="member-nav" aria-label="Member portal">
+      <a routerLink="/portal" routerLinkActive="selected" [routerLinkActiveOptions]="{ exact: true }" (click)="closeMenu()"><span>⌂</span> Home</a>
+      <a routerLink="/portal/protocols" routerLinkActive="selected" (click)="closeMenu()"><span>▤</span> Protocols <i>{{ protocolCount }}</i></a>
+      <a routerLink="/portal/dress-code" routerLinkActive="selected" (click)="closeMenu()"><span>◇</span> Dress code</a>
+      <a routerLink="/portal/media" routerLinkActive="selected" (click)="closeMenu()"><span>▧</span> Media library</a>
+    </nav>
+    <div class="member-sidebar-bottom">
+      <div class="member-help"><strong>Here for you</strong><p>Need help finding your way around?</p><a href="mailto:support@goodnews.world">Contact your administrator ↗</a></div>
+      <div class="member-system"><i></i> Your community is connected</div>
+    </div>
+  </aside>
+
+  <main class="member-main">
+    <header class="member-topbar">
+      <div class="member-breadcrumb"><span>Member portal</span><b>/</b><strong>THE GOODNEWS WORLD</strong></div>
+      <div class="member-top-actions">
+        <span class="member-date">MONDAY, OCTOBER 26, 2026</span>
+        <button class="member-notice" type="button" aria-label="Notifications">♧<i></i></button>
+        <span class="member-top-divider"></span>
+        <div class="member-account">
+          <span class="member-avatar">{{ memberInitials }}</span>
+          <span><strong>{{ session.memberName }}</strong><small>Member · Lagos Central</small></span>
+          <button class="account-menu-button" type="button" aria-label="Open profile menu" (click)="menuOpen = !menuOpen">⌄</button>
+          @if (menuOpen) { <div class="account-menu"><a routerLink="/portal/profile" (click)="closeMenu()">My profile</a><button type="button" (click)="session.signOut()">Sign out</button></div> }
+        </div>
+      </div>
+      <div class="mobile-member-brand"><img src="imagem/logo.png" width="48" alt="logo spirit embassy"><strong>SPIRIT EMBASSY</strong><button type="button" aria-label="Sign out" (click)="session.signOut()">↗</button></div>
+    </header>
+    <div class="member-page"><router-outlet /></div>
+    <footer class="member-footer"><span>© 2026 The Goodnews World</span><span>Growing together, wherever we gather <b>✳</b></span><a routerLink="/portal/profile">Your account</a></footer>
+  </main>
+</div>

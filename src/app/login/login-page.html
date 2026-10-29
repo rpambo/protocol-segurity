@@ -1,0 +1,37 @@
+<main class="login-shell">
+  <section class="login-brand-panel">
+    <img class="login-globe" src="/images/spirit-embassy-world-map.svg" alt="" aria-hidden="true">
+    <a class="login-brand" routerLink="/">
+      <img src="imagem/logo.png" width="48" alt="logo spirit embassy">
+      <span><strong>SPIRIT EMBASSY</strong><small>PROTOCOL &amp; SECURITY</small></span>
+    </a>
+    <div class="brand-panel-content">
+      <span class="brand-panel-kicker">THE GOODNEWS CHURCH</span>
+      <h1>Christ at the<br>centre.<br><em>One standard.</em></h1>
+      <p>Protocol and security guidance for every Spirit Embassy branch, rooted in order, vigilance and care.</p>
+    </div>
+    <div class="brand-panel-footer"><span>✳</span> CHRIST · ORDER · SERVICE</div>
+  </section>
+
+  <section class="login-form-panel">
+    <a class="back-home" routerLink="/"><span>←</span> Back to home</a>
+    <div class="login-form-wrap">
+      <div class="login-kicker"><span></span> SPIRIT EMBASSY TEAM ACCESS</div>
+      <h2>GOODNEWS TO YOU.</h2>
+      <p class="login-intro">Sign in to access training, guidance and resources for your branch.</p>
+
+      <form (submit)="$event.preventDefault(); signIn()">
+        <label class="login-field"><span>Email address</span><input type="email" name="email" autocomplete="username" placeholder="you@example.org" required [(ngModel)]="email"></label>
+        <label class="login-field">
+          <span>Password <button class="forgot-link" type="button" (click)="errorMessage = 'Please contact your administrator to reset your password.'">Forgot password?</button></span>
+          <span class="password-input"><input [type]="showPassword ? 'text' : 'password'" name="password" autocomplete="current-password" placeholder="Enter your password" required [(ngModel)]="password"><button type="button" class="show-password" [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'" (click)="showPassword = !showPassword">{{ showPassword ? 'Hide' : 'Show' }}</button></span>
+        </label>
+        @if (errorMessage) { <p class="form-message" role="alert">{{ errorMessage }}</p> }
+        <button class="sign-in-button" type="submit">Sign in <span>→</span></button>
+      </form>
+
+      <div class="secure-note"><span>⌑</span><p><strong>Authorised team access.</strong><br>Contact your branch administrator if you need help signing in.</p></div>
+    </div>
+    <footer class="login-footer"><span>© 2026 Spirit Embassy · The GoodNews Church</span><a href="#privacy">Privacy &amp; security</a></footer>
+  </section>
+</main>

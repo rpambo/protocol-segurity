@@ -1,0 +1,470 @@
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+.admin-login-shell {
+  display: grid;
+  grid-template-columns: minmax(340px, .9fr) minmax(460px, 1.1fr);
+  min-height: 100vh;
+  color: #33362e;
+  background: #faf9f5;
+  font-family: Arial, "Segoe UI", sans-serif;
+}
+
+.admin-brand-panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  min-height: 100vh;
+  padding: 35px 9%;
+  color: #f5f0e2;
+  background: #191a14;
+  isolation: isolate;
+}
+
+.brand {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: max-content;
+  color: inherit;
+  text-decoration: none;
+}
+
+.brand img {
+  display: block;
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+}
+
+.brand-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.brand-copy strong {
+  font: 13px Georgia, serif;
+  letter-spacing: .14em;
+}
+
+.brand-copy small {
+  color: #bdb69c;
+  font-size: 7px;
+  letter-spacing: .24em;
+}
+
+.brand-message {
+  position: relative;
+  z-index: 2;
+  margin: 0 0 13vh 8%;
+}
+
+.eyebrow,
+.form-kicker {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #c7b15e;
+  font-size: 8px;
+  letter-spacing: .2em;
+}
+
+.eyebrow span,
+.form-kicker span {
+  width: 19px;
+  height: 1px;
+  background: #c7b15e;
+}
+
+.brand-message h1 {
+  margin: 22px 0 14px;
+  font: 400 clamp(48px, 5.6vw, 68px)/.99 Georgia, serif;
+  letter-spacing: -.045em;
+}
+
+.brand-message h1 em {
+  color: #d8c272;
+  font-weight: 400;
+}
+
+.brand-message p {
+  max-width: 330px;
+  color: #b6b5a9;
+  font-size: 11px;
+  line-height: 1.8;
+}
+
+.brand-capabilities {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 24px;
+  color: #d3bd70;
+  font-size: 7px;
+  letter-spacing: .16em;
+}
+
+.brand-capabilities i {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #8c8057;
+}
+
+.brand-footer {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding-top: 14px;
+  border-top: 1px solid #ffffff2c;
+  color: #aead9f;
+  font-size: 9px;
+}
+
+.brand-footer span {
+  color: #d3bd70;
+  font-size: 16px;
+}
+
+.branch-network {
+  position: absolute;
+  z-index: -1;
+  right: -4%;
+  bottom: 12%;
+  width: min(450px, 100%);
+  height: auto;
+  overflow: visible;
+  opacity: .8;
+  pointer-events: none;
+}
+
+.network-line,
+.network-ring {
+  stroke: #d5bd69;
+  stroke-width: 1;
+}
+
+.network-line {
+  opacity: .23;
+}
+
+.network-ring {
+  stroke-dasharray: 2 7;
+  opacity: .17;
+}
+
+.network-node {
+  fill: #191a14;
+  stroke: #c9b362;
+  stroke-width: 1.5;
+}
+
+.network-hub-halo {
+  fill: #d5bd69;
+  fill-opacity: .035;
+  stroke: #d5bd69;
+  stroke-opacity: .19;
+  stroke-width: 1;
+}
+
+.network-hub {
+  fill: #202019;
+  stroke: #d5bd69;
+  stroke-opacity: .5;
+  stroke-width: 1;
+}
+
+.network-building {
+  stroke: #d9c779;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.4;
+}
+
+.network-label {
+  fill: #d3bd70;
+  font: 7px Arial, sans-serif;
+  letter-spacing: 1.2px;
+  opacity: .65;
+}
+
+.admin-form-panel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 70px 8% 85px;
+}
+
+.back-home {
+  position: absolute;
+  top: 34px;
+  right: 9%;
+  color: #82867b;
+  font-size: 10px;
+  text-decoration: none;
+}
+
+.back-home:hover,
+.member-link:hover {
+  color: #88753f;
+}
+
+.form-card {
+  width: min(100%, 370px);
+  margin-top: 12px;
+}
+
+.form-emblem {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  margin-bottom: 25px;
+  place-items: center;
+  border: 1px solid #e8dfc0;
+  border-radius: 50%;
+  color: #a58d44;
+  font-size: 18px;
+}
+
+.form-kicker {
+  color: #a28c4b;
+}
+
+.form-kicker span {
+  background: #b39a4e;
+}
+
+.form-card h2 {
+  margin: 15px 0 7px;
+  color: #31372f;
+  font: 400 38px Georgia, serif;
+  letter-spacing: -.03em;
+}
+
+.form-intro {
+  margin: 0 0 29px;
+  color: #858a80;
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 18px;
+  color: #596258;
+  font-size: 9px;
+  font-weight: 600;
+}
+
+.form-field > span {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.form-field input {
+  width: 100%;
+  height: 44px;
+  padding: 0 12px;
+  border: 1px solid #e1e2d9;
+  border-radius: 4px;
+  outline: 0;
+  color: #404a40;
+  background: #fff;
+  font: 10px Arial, sans-serif;
+}
+
+.form-field input::placeholder {
+  color: #a7aaa1;
+}
+
+.form-field input:focus {
+  border-color: #a69354;
+  box-shadow: 0 0 0 2px #b6a05a1a;
+}
+
+.forgot-link,
+.show-password {
+  padding: 0;
+  border: 0;
+  color: #88753f;
+  background: transparent;
+  font: 9px Arial, sans-serif;
+  cursor: pointer;
+}
+
+.password-input {
+  position: relative;
+  display: block !important;
+}
+
+.password-input input {
+  padding-right: 55px;
+}
+
+.show-password {
+  position: absolute;
+  top: 15px;
+  right: 12px;
+  color: #8f9589;
+}
+
+.form-message {
+  margin: -4px 0 13px;
+  color: #9d5944;
+  font-size: 9px;
+}
+
+.sign-in-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 45px;
+  margin-top: 7px;
+  padding: 0 14px;
+  border: 1px solid #a18943;
+  border-radius: 4px;
+  color: #28271f;
+  background: #d5bd69;
+  font-size: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.sign-in-button:hover {
+  background: #e1ce87;
+}
+
+.sign-in-button span {
+  font-size: 16px;
+}
+
+.security-note {
+  display: flex;
+  gap: 10px;
+  margin-top: 23px;
+  padding: 12px;
+  border: 1px solid #e9e5d6;
+  border-radius: 5px;
+  background: #f6f4eb;
+}
+
+.security-note > span {
+  color: #a58d44;
+  font-size: 18px;
+}
+
+.security-note p {
+  margin: 0;
+  color: #85877e;
+  font-size: 8px;
+  line-height: 1.65;
+}
+
+.security-note strong {
+  color: #535a4f;
+  font-size: 9px;
+}
+
+.member-link {
+  display: block;
+  margin-top: 22px;
+  color: #85877c;
+  font-size: 9px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.member-link span {
+  color: #88753f;
+  font-weight: 600;
+}
+
+.form-footer {
+  position: absolute;
+  right: 9%;
+  bottom: 24px;
+  left: 9%;
+  display: flex;
+  justify-content: space-between;
+  color: #9b9d94;
+  font-size: 8px;
+}
+
+@media (max-width: 760px) {
+  .admin-login-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-brand-panel {
+    min-height: 360px;
+    padding: 22px 24px;
+  }
+
+  .brand-message {
+    margin: 24px 0 0 3%;
+  }
+
+  .brand-message h1 {
+    margin: 14px 0 5px;
+    font-size: 43px;
+  }
+
+  .brand-message p {
+    max-width: 290px;
+    font-size: 10px;
+  }
+
+  .brand-capabilities {
+    margin-top: 14px;
+  }
+
+  .brand-footer {
+    margin-top: 18px;
+    padding-top: 9px;
+  }
+
+  .branch-network {
+    right: -29%;
+    bottom: 8%;
+    width: 340px;
+    opacity: .55;
+  }
+
+  .admin-form-panel {
+    min-height: 560px;
+    padding: 70px 25px 85px;
+  }
+
+  .back-home {
+    top: 20px;
+    right: 24px;
+  }
+
+  .form-footer {
+    right: 24px;
+    bottom: 20px;
+    left: 24px;
+  }
+}
+
+@media (max-width: 380px) {
+  .form-footer {
+    gap: 12px;
+    font-size: 7px;
+  }
+}

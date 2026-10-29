@@ -1,0 +1,97 @@
+<main class="admin-login-shell">
+  <section class="admin-brand-panel">
+    <svg class="branch-network" viewBox="0 0 480 300" fill="none" aria-hidden="true">
+      <path class="network-line" d="M239 149 93 66M239 149 167 38M239 149 367 54M239 149 408 139M239 149 351 254M239 149 114 242" />
+      <path class="network-ring" d="M239 149 93 66M239 149 167 38M239 149 367 54M239 149 408 139M239 149 351 254M239 149 114 242" />
+      <circle class="network-node" cx="93" cy="66" r="7" />
+      <circle class="network-node" cx="167" cy="38" r="5" />
+      <circle class="network-node" cx="367" cy="54" r="7" />
+      <circle class="network-node" cx="408" cy="139" r="5" />
+      <circle class="network-node" cx="351" cy="254" r="7" />
+      <circle class="network-node" cx="114" cy="242" r="5" />
+      <circle class="network-hub-halo" cx="239" cy="149" r="44" />
+      <circle class="network-hub" cx="239" cy="149" r="31" />
+      <path class="network-building" d="M225 143h28v21h-28zM221 143l18-12 18 12M232 149v5m7-5v5m7-5v5m-14 10v-6h7v6" />
+      <text class="network-label" x="93" y="85" text-anchor="middle">REGION</text>
+      <text class="network-label" x="367" y="73" text-anchor="middle">BRANCH</text>
+      <text class="network-label" x="351" y="274" text-anchor="middle">COMMUNITY</text>
+    </svg>
+
+    <a class="brand" routerLink="/" aria-label="Spirit Embassy — back to home">
+      <img src="imagem/logo.png" width="48" height="48" alt="">
+      <span class="brand-copy">
+        <strong>SPIRIT EMBASSY</strong>
+        <small>PROTOCOL &amp; SECURITY</small>
+      </span>
+    </a>
+
+    <div class="brand-message">
+      <span class="eyebrow"><span></span> GLOBAL ADMINISTRATION</span>
+      <h1>One vision.<br><em>Every branch.</em></h1>
+      <p>Manage people, regions and resources across your workspace, with every branch connected to one shared standard.</p>
+      <div class="brand-capabilities"><span>PEOPLE</span><i></i><span>REGIONS</span><i></i><span>RESOURCES</span></div>
+    </div>
+
+    <div class="brand-footer"><span aria-hidden="true">✳</span> CHRIST · ORDER · SERVICE</div>
+  </section>
+
+  <section class="admin-form-panel">
+    <a class="back-home" routerLink="/">← <span>Back to home</span></a>
+
+    <div class="form-card">
+      <div class="form-emblem" aria-hidden="true">✳</div>
+      <div class="form-kicker"><span></span> SECURE ADMINISTRATOR ACCESS</div>
+      <h2>Welcome back.</h2>
+      <p class="form-intro">Sign in to manage your workspace, branches and resources.</p>
+
+      <form (submit)="$event.preventDefault(); signIn()">
+        <label class="form-field">
+          <span>Administrator email</span>
+          <input
+            type="email"
+            name="email"
+            autocomplete="username"
+            placeholder="you@spiritembassy.org"
+            required
+            [(ngModel)]="email">
+        </label>
+
+        <label class="form-field">
+          <span>Password <button class="forgot-link" type="button" (click)="errorMessage = 'Please contact your system administrator to reset your password.'">Forgot password?</button></span>
+          <span class="password-input">
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              name="password"
+              autocomplete="current-password"
+              placeholder="Enter your password"
+              required
+              [(ngModel)]="password">
+            <button
+              class="show-password"
+              type="button"
+              [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+              (click)="showPassword = !showPassword">{{ showPassword ? 'Hide' : 'Show' }}</button>
+          </span>
+        </label>
+
+        @if (errorMessage) {
+          <p class="form-message" role="alert">{{ errorMessage }}</p>
+        }
+
+        <button class="sign-in-button" type="submit">Sign in to dashboard <span aria-hidden="true">→</span></button>
+      </form>
+
+      <div class="security-note">
+        <span aria-hidden="true">⌑</span>
+        <p><strong>Administrator access only</strong><br>For account assistance, contact your system administrator.</p>
+      </div>
+
+      <a class="member-link" routerLink="/login">Looking for member access? <span>Sign in here →</span></a>
+    </div>
+
+    <footer class="form-footer">
+      <span>© 2026 Spirit Embassy · The GoodNews Church</span>
+      <span>Protected workspace</span>
+    </footer>
+  </section>
+</main>

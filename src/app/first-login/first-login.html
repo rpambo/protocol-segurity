@@ -1,0 +1,79 @@
+<main class="first-login-shell">
+  <section class="first-login-brand">
+    <a class="brand" routerLink="/" aria-label="Spirit Embassy — back to home">
+      <img src="imagem/logo.png" width="48" height="48" alt="">
+      <span class="brand-copy">
+        <strong>SPIRIT EMBASSY</strong>
+        <small>PROTOCOL &amp; SECURITY</small>
+      </span>
+    </a>
+
+    <div class="brand-message">
+      <span class="eyebrow"><span></span> THE GOODNEWS CHURCH</span>
+      <h1>A fresh start<br>for your <em>service.</em></h1>
+      <p>Keep your account secure with a password that is yours alone.</p>
+    </div>
+
+    <div class="brand-footer"><span aria-hidden="true">✳</span> CHRIST · ORDER · SERVICE</div>
+  </section>
+
+  <section class="first-login-content">
+    <div class="first-login-card">
+      <div class="step-indicator"><span>01</span><i></i><span class="step-current">02</span><i></i><span>03</span></div>
+      <div class="form-kicker"><span></span> FIRST-TIME SIGN IN</div>
+      <h2>Create your password.</h2>
+      <p class="form-intro">Welcome{{ displayName ? ', ' + displayName : '' }}. For your security, choose a new password before continuing.</p>
+
+      <form (submit)="$event.preventDefault(); savePassword()">
+        <label class="form-field">
+          <span>New password</span>
+          <span class="password-input">
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              name="newPassword"
+              autocomplete="new-password"
+              placeholder="At least 8 characters"
+              minlength="8"
+              required
+              [(ngModel)]="newPassword">
+            <button
+              class="show-password"
+              type="button"
+              [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+              (click)="showPassword = !showPassword">{{ showPassword ? 'Hide' : 'Show' }}</button>
+          </span>
+          <small class="field-hint">Use at least 8 characters.</small>
+        </label>
+
+        <label class="form-field">
+          <span>Confirm new password</span>
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            name="confirmPassword"
+            autocomplete="new-password"
+            placeholder="Enter your new password again"
+            required
+            [(ngModel)]="confirmPassword">
+        </label>
+
+        @if (errorMessage) {
+          <p class="form-message" role="alert">{{ errorMessage }}</p>
+        }
+
+        <button class="save-button" type="submit">Save password and continue <span aria-hidden="true">→</span></button>
+      </form>
+
+      <div class="security-note">
+        <span aria-hidden="true">⌑</span>
+        <p><strong>Your account, your password.</strong><br>Choose a strong, unique password for your account.</p>
+      </div>
+
+      <button class="sign-out-link" type="button" (click)="returnToSignIn()">Not you? Return to sign in</button>
+    </div>
+
+    <footer class="content-footer">
+      <span>© 2026 Spirit Embassy · The GoodNews Church</span>
+      <span>Secure account setup</span>
+    </footer>
+  </section>
+</main>

@@ -1,0 +1,430 @@
+<div class="app-shell">
+  <aside class="sidebar">
+    <a class="brand" href="#" (click)="$event.preventDefault(); selectSection('Overview')">
+      <span class="brand-mark" aria-hidden="true">
+        <img src="imagem/logo.png" width="48" alt="logo spirit embassy">
+      </span>
+      <span class="brand-copy">
+        <span class="brand-name">SPIRIT EMBASSY</span>
+        <span class="brand-subtitle">PROTOCOL &amp; SECURITY</span>
+      </span>
+    </a>
+
+    <div class="workspace-switcher">
+      <span class="workspace-avatar">G</span>
+      <span class="workspace-copy"><strong>The Goodnews World</strong><small>Global workspace</small></span>
+      <span class="switcher-chevron">⌄</span>
+    </div>
+
+    <nav class="side-navigation" aria-label="Main navigation">
+      @for (group of navigation; track group.label) {
+        <div class="nav-group">
+          <p class="nav-heading">{{ group.label }}</p>
+          @for (item of group.items; track item.name) {
+            <button class="nav-link" [class.active]="activeSection === item.name" (click)="selectSection(item.name)">
+              <span class="nav-icon" aria-hidden="true">{{ item.icon }}</span>
+              <span>{{ item.name }}</span>
+              @if (item.name === 'Protocols') { <span class="nav-count">24</span> }
+            </button>
+          }
+        </div>
+      }
+    </nav>
+
+    <div class="sidebar-bottom">
+      <div class="support-card">
+        <strong>Here to help</strong>
+        <span>Find guidance for using your platform.</span>
+        <button type="button">Visit help centre <span aria-hidden="true">↗</span></button>
+      </div>
+      <div class="sidebar-foot"><span class="status-dot"></span> All systems operational <span class="foot-version">v1.0</span></div>
+    </div>
+  </aside>
+
+  <main class="main-area">
+    <header class="topbar">
+      <div class="breadcrumbs"><span>Workspace</span><span class="crumb-separator">/</span><strong>{{ sectionTitle }}</strong></div>
+      <div class="topbar-actions">
+        <span class="today-label">Monday, October 26, 2026</span>
+        <button class="icon-button search-shortcut" type="button" aria-label="Search" (click)="selectSection('Protocols')">⌕</button>
+        <div class="popover-anchor">
+          <button class="icon-button notification-button" type="button" aria-label="Notifications" (click)="toggleNotifications()">
+            ♧<span class="notification-dot"></span>
+          </button>
+          @if (showNotifications) {
+            <div class="popover notification-popover">
+              <strong>You're all caught up</strong>
+              <span>New updates will appear here.</span>
+            </div>
+          }
+        </div>
+        <span class="topbar-divider"></span>
+        <div class="popover-anchor">
+          <button class="profile-trigger" type="button" (click)="toggleProfileMenu()">
+            <span class="profile-avatar">RK</span>
+            <span class="profile-name"><strong>Rafael Kitoco</strong><small>Global administrator</small></span>
+            <span class="switcher-chevron">⌄</span>
+          </button>
+          @if (showProfileMenu) {
+            <div class="popover profile-popover">
+              <strong>Rafael Kitoco</strong>
+              <span>Global administrator</span>
+              <button type="button" (click)="selectSection('Settings')">Account settings</button>
+            </div>
+          }
+        </div>
+      </div>
+    </header>
+
+    <div class="page-content">
+      @if (activeSection === 'Overview') {
+        <section class="welcome-row">
+          <div>
+            <div class="eyebrow"><span class="eyebrow-line"></span> MONDAY, OCTOBER 26</div>
+            <h1>GoodNews to you, Rafael <span class="wave">✳</span></h1>
+            <p class="page-intro">A clear view of your community, all in one place.</p>
+          </div>
+          <button class="primary-button" type="button" (click)="startProtocolCreation()"><span aria-hidden="true">＋</span> Create protocol</button>
+        </section>
+
+        <section class="stat-grid" aria-label="Platform overview">
+          @for (stat of stats; track stat.label) {
+            <article class="stat-card">
+              <div class="stat-card-top"><span>{{ stat.label }}</span><span class="stat-icon" [class]="stat.tone">{{ stat.icon }}</span></div>
+              <div class="stat-value">{{ stat.value }}</div>
+              <div class="stat-foot"><span class="trend-mark">↗</span>{{ stat.change }}</div>
+            </article>
+          }
+        </section>
+
+        <section class="dashboard-grid">
+          <article class="panel protocols-panel">
+            <div class="panel-heading">
+              <div><h2>Recent protocols</h2><p>The latest guidance shared with your community.</p></div>
+              <button class="text-button" type="button" (click)="selectSection('Protocols')">View all <span aria-hidden="true">→</span></button>
+            </div>
+            <div class="protocol-list">
+              @for (protocol of protocols.slice(0, 3); track protocol.title) {
+                <button class="protocol-row" type="button" (click)="selectSection('Protocols')">
+                  <span class="protocol-avatar" [class]="protocol.color">{{ protocol.initials }}</span>
+                  <span class="protocol-main">
+                    <strong>{{ protocol.title }}</strong>
+                    <small>{{ protocol.category }} <span>·</span> {{ protocol.scope }}</small>
+                  </span>
+                  <span class="protocol-date">{{ protocol.date }}</span>
+                  <span class="read-rate"><span class="mini-check">✓</span>{{ protocol.reads }}</span>
+                  <span class="row-arrow">↗</span>
+                </button>
+              }
+            </div>
+            <div class="panel-footer"><span class="status-dot"></span> Protocols are up to date <span class="footer-link" (click)="selectSection('Reports & audit')">View reading report</span></div>
+          </article>
+
+          <article class="panel dress-panel">
+            <div class="panel-heading">
+              <div><h2>This week's dress code</h2><p>Shared guidance for every gathering.</p></div>
+              <button class="more-button" type="button" aria-label="More options" (click)="selectSection('Dress code')">···</button>
+            </div>
+            <div class="week-label"><span class="calendar-mark">▦</span> OCT 26 — NOV 1, 2026 <span class="week-current">THIS WEEK</span></div>
+            <div class="dress-list">
+              @for (item of dressCodes; track item.day) {
+                <div class="dress-row">
+                  <span class="dress-day">{{ item.day }}</span>
+                  <span class="dress-copy"><strong>{{ item.title }}</strong><small>{{ item.detail }}</small></span>
+                  <span class="scope-pill" [class]="item.color">{{ item.scope }}</span>
+                </div>
+              }
+            </div>
+            <button class="dress-link" type="button" (click)="selectSection('Dress code')">Open dress code calendar <span>→</span></button>
+          </article>
+
+          <article class="panel activity-panel">
+            <div class="panel-heading">
+              <div><h2>Community activity</h2><p>Recent moments across your workspace.</p></div>
+              <button class="text-button" type="button" (click)="selectSection('Reports & audit')">View activity <span aria-hidden="true">→</span></button>
+            </div>
+            <div class="activity-list">
+              @for (event of activity; track event.person + event.time) {
+                <div class="activity-row">
+                  <span class="activity-avatar" [class]="event.color">{{ event.initials }}</span>
+                  <p><strong>{{ event.person }}</strong> {{ event.action }} <b>{{ event.subject }}</b><small>{{ event.time }}</small></p>
+                </div>
+              }
+            </div>
+          </article>
+
+          <article class="reach-card">
+            <div class="reach-top"><span class="reach-icon">✧</span><span class="reach-period">THIS MONTH <span>⌄</span></span></div>
+            <p>Your community is<br><strong>staying connected.</strong></p>
+            <div class="reach-number">1,104 <span>members reached</span></div>
+            <div class="reach-meter"><span></span></div>
+            <div class="reach-caption"><span>86% of active members</span><span>+12% <b>↗</b></span></div>
+            <div class="reach-orbit orbit-one"></div><div class="reach-orbit orbit-two"></div>
+          </article>
+        </section>
+
+        <footer class="page-footer"><span>© 2026 The Goodnews World</span><span>Built for a connected community <span class="footer-heart">✦</span></span><a href="#" (click)="$event.preventDefault(); selectSection('Settings')">Privacy &amp; security</a></footer>
+      } @else {
+        <section class="section-header">
+          <div>
+            <div class="eyebrow"><span class="eyebrow-line"></span> THE GOODNEWS WORLD</div>
+            <h1>{{ sectionTitle }}</h1>
+            <p class="page-intro">{{ sectionDescription }}</p>
+          </div>
+          @if (activeSection !== 'Settings') {
+            <button class="primary-button" type="button" [disabled]="activeSection !== 'Protocols'" (click)="startProtocolCreation()">
+              @if (activeSection === 'Protocols') {
+                <span aria-hidden="true">＋</span> New Protocol
+              } @else if (activeSection === 'Dress code') {
+                <span aria-hidden="true">＋</span> New dress code
+              } @else if (activeSection === 'Media library') {
+                <span aria-hidden="true">＋</span> Upload content
+              } @else if (activeSection === 'Users') {
+                <span aria-hidden="true">＋</span> Invite member
+              } @else if (activeSection === 'Regions & branches') {
+                <span aria-hidden="true">＋</span> Add region
+              } @else {
+                Export report
+              }
+            </button>
+          }
+        </section>
+
+        @if (activeSection === 'Protocols' || activeSection === 'Media library' || activeSection === 'Users') {
+          <section class="panel module-panel">
+            <div class="module-toolbar">
+              @if (activeSection !== 'Users') {
+                <div class="scope-tabs" aria-label="Filter by scope">
+                  @for (scope of ['All scopes', 'Global', 'Regional', 'Local']; track scope) {
+                    <button type="button" [class.selected]="activeScope === scope" (click)="setScope(scope)">{{ scope }}</button>
+                  }
+                </div>
+              } @else {
+                <div class="user-summary"><span><strong>1,284</strong> total members</span><span><i class="status-dot"></i> 1,196 active</span><span>12 pending invitations</span></div>
+              }
+              <label class="table-search"><span aria-hidden="true">⌕</span><input type="search" placeholder="Search {{ activeSection.toLowerCase() }}..." [value]="searchQuery" (input)="searchQuery = $any($event.target).value"></label>
+            </div>
+            @if (activeSection === 'Protocols') {
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>PROTOCOL</th><th>SCOPE</th><th>LAST UPDATED</th><th>READ CONFIRMATION</th><th>STATUS</th><th></th></tr></thead>
+                <tbody>
+                  @for (protocol of filteredProtocols; track protocol.title) {
+                    <tr>
+                      <td><div class="table-title"><span class="protocol-avatar small" [class]="protocol.color">{{ protocol.initials }}</span><span><strong>{{ protocol.title }}</strong><small>{{ protocol.category }}</small></span></div></td>
+                      <td><span class="scope-pill neutral">{{ protocol.scope }}</span></td>
+                      <td>{{ protocol.date }}</td>
+                      <td><span class="read-cell"><span class="read-track"><i [style.width]="protocol.reads"></i></span>{{ protocol.reads }}</span></td>
+                      <td><span class="status-pill" [class.review]="protocol.status === 'Needs review'"><span></span>{{ protocol.status }}</span></td>
+                      <td><button class="row-menu" type="button" aria-label="Open protocol">···</button></td>
+                    </tr>
+                  } @empty {
+                    <tr><td class="empty-state" colspan="6">No protocols match your search.</td></tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+            } @else if (activeSection === 'Users') {
+              <div class="table-wrap">
+                <table class="users-table">
+                  <thead><tr><th>MEMBER</th><th>ROLE</th><th>REGION / BRANCH</th><th>LAST ACTIVE</th><th>STATUS</th><th></th></tr></thead>
+                  <tbody>
+                    @for (user of filteredUsers; track user.email) {
+                      <tr>
+                        <td><div class="table-title"><span class="member-avatar" [class]="user.tone">{{ user.initials }}</span><span><strong>{{ user.name }}</strong><small>{{ user.email }}</small></span></div></td>
+                        <td>{{ user.role }}</td><td>{{ user.location }}</td><td>{{ user.lastActive }}</td>
+                        <td><span class="status-pill" [class.review]="user.status !== 'Active'"><span></span>{{ user.status }}</span></td>
+                        <td><button class="row-menu" type="button" [attr.aria-label]="'Actions for ' + user.name">···</button></td>
+                      </tr>
+                    } @empty {
+                      <tr><td class="empty-state" colspan="6">No members match your search.</td></tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+            } @else {
+              <div class="media-grid">
+                @for (item of filteredMediaItems; track item.title) {
+                  <article class="media-card">
+                    <div class="media-art" [class]="item.tone">
+                      <span class="media-art-mark">{{ item.icon }}</span>
+                      <span class="media-art-brand">THE GOODNEWS WORLD</span>
+                      @if (item.type === 'Video') { <span class="media-duration">{{ item.format.split('·')[1] }}</span> }
+                    </div>
+                    <div class="media-card-body">
+                      <div class="media-card-meta"><span>{{ item.type }}</span><span class="scope-pill neutral">{{ item.scope }}</span></div>
+                      <strong>{{ item.title }}</strong>
+                      <small>{{ item.format }} <span>·</span> {{ item.date }}</small>
+                    </div>
+                  </article>
+                } @empty {
+                  <p class="media-empty">No media matches your filters.</p>
+                }
+              </div>
+            }
+            <div class="module-footer">
+              @if (activeSection === 'Protocols') {
+                <span>Showing {{ filteredProtocols.length }} protocol{{ filteredProtocols.length === 1 ? '' : 's' }}</span>
+              } @else if (activeSection === 'Users') {
+                <span>Showing {{ filteredUsers.length }} members</span>
+              } @else {
+                <span>Showing {{ filteredMediaItems.length }} items</span>
+              }
+              <span>Access follows your organisation role.</span>
+            </div>
+          </section>
+        } @else if (activeSection === 'Dress code') {
+          <section class="dress-page">
+            <div class="dress-week-toolbar panel">
+              <div><span class="calendar-mark">▦</span><strong>Weekly schedule</strong><small>Dress guidance for every gathering</small></div>
+              <div class="week-controls">
+                <button type="button" aria-label="Previous week" (click)="changeWeek(-1)">‹</button>
+                <span>{{ weekLabel }}</span>
+                <button type="button" aria-label="Next week" (click)="changeWeek(1)">›</button>
+                <button class="today-button" type="button" (click)="selectedWeek = 0">Today</button>
+              </div>
+            </div>
+            <div class="dress-page-grid">
+              @for (item of dressCodes; track item.day) {
+                <article class="dress-detail-card panel">
+                  <div class="dress-art" [class]="item.image">
+                    <span class="dress-art-sun">✳</span>
+                    <span class="dress-art-caption">THE GOODNEWS WORLD</span>
+                    <span class="dress-art-day">{{ item.day }}</span>
+                  </div>
+                  <div class="dress-detail-content">
+                    <div class="dress-detail-top"><span class="dress-day-tag">{{ item.day }}</span><span class="scope-pill" [class]="item.color">{{ item.scope }}</span></div>
+                    <h2>{{ item.title }}</h2>
+                    <p>{{ item.detail }}</p>
+                    <div class="dress-detail-meta"><span>Dress style</span><strong>{{ item.attire }}</strong></div>
+                    <button class="dress-edit-button" type="button">View dress code <span>→</span></button>
+                  </div>
+                </article>
+              }
+            </div>
+            <div class="dress-note"><span>✦</span><p><strong>One community, one standard.</strong> Members see guidance for their branch alongside regional and global dress codes.</p></div>
+          </section>
+        } @else if (activeSection === 'Regions & branches') {
+          <section class="regions-page">
+            <div class="region-summary-row">
+              <div class="summary-tile panel"><span>Regions</span><strong>12</strong><small>Across 8 countries</small></div>
+              <div class="summary-tile panel"><span>Branches</span><strong>72</strong><small>Connected communities</small></div>
+              <div class="summary-tile panel"><span>Members</span><strong>12,480</strong><small>Across all regions</small></div>
+            </div>
+            <div class="regions-heading"><div><h2>Regions</h2><p>Regional administrators and their branches.</p></div><label class="table-search"><span>⌕</span><input placeholder="Search regions..." [value]="searchQuery" (input)="searchQuery = $any($event.target).value"></label></div>
+            <div class="region-grid">
+              @for (region of filteredRegions; track region.code) {
+                <article class="region-card panel">
+                  <div class="region-card-top"><span class="region-mark">{{ region.code }}</span><span class="status-pill"><span></span>{{ region.status }}</span></div>
+                  <h3>{{ region.name }}</h3><p>{{ region.country }}</p>
+                  <div class="region-lead"><span class="member-avatar sage">{{ initialsFor(region.lead) }}</span><span><small>REGIONAL ADMINISTRATOR</small><strong>{{ region.lead }}</strong></span></div>
+                  <div class="region-card-stats"><span><strong>{{ region.branches }}</strong><small>Branches</small></span><span><strong>{{ region.members }}</strong><small>Members</small></span></div>
+                  <button class="dress-edit-button" type="button">View branches <span>→</span></button>
+                </article>
+              } @empty {
+                <p class="media-empty">No regions match your search.</p>
+              }
+            </div>
+          </section>
+        } @else if (activeSection === 'Reports & audit') {
+          <section class="reports-page">
+            <div class="reports-toolbar panel">
+              <div><strong>Activity overview</strong><small>Access, reading and administrative actions.</small></div>
+              <select [value]="reportRange" (change)="setReportRange($any($event.target).value)"><option>Last 7 days</option><option>Last 30 days</option><option>This year</option></select>
+            </div>
+            <div class="report-stats">
+              <article class="report-stat panel"><span>Successful sign-ins</span><strong>2,486</strong><small>↗ 8.4% from previous period</small></article>
+              <article class="report-stat panel"><span>Protocol confirmations</span><strong>1,104</strong><small>86% member completion rate</small></article>
+              <article class="report-stat panel"><span>Admin actions</span><strong>348</strong><small>Across 12 active regions</small></article>
+              <article class="report-stat panel"><span>Blocked attempts</span><strong>3</strong><small>All reviewed by administrators</small></article>
+            </div>
+            <div class="audit-panel panel">
+              <div class="audit-heading"><div><h2>Recent audit activity</h2><p>A traceable record of important platform events.</p></div><label class="table-search"><span>⌕</span><input placeholder="Filter activity..." [value]="searchQuery" (input)="searchQuery = $any($event.target).value"></label></div>
+              <div class="table-wrap"><table class="audit-table"><thead><tr><th>ACTOR</th><th>ACTION</th><th>MODULE</th><th>SCOPE</th><th>DATE &amp; TIME</th><th>RESULT</th></tr></thead>
+                <tbody>@for (event of filteredAuditEvents; track event.user + event.time) {
+                  <tr><td><div class="table-title"><span class="member-avatar sage">{{ event.initials }}</span><span><strong>{{ event.user }}</strong><small>{{ event.item }}</small></span></div></td><td>{{ event.action }}</td><td>{{ event.module }}</td><td><span class="scope-pill neutral">{{ event.scope }}</span></td><td>{{ event.time }}</td><td><span class="status-pill" [class.review]="event.outcome === 'Blocked'"><span></span>{{ event.outcome }}</span></td></tr>
+                } @empty { <tr><td colspan="6" class="empty-state">No activity matches your search.</td></tr> }</tbody>
+              </table></div>
+              <div class="module-footer"><span>Showing {{ filteredAuditEvents.length }} recent events</span><span>Audit records are retained for compliance review.</span></div>
+            </div>
+          </section>
+        } @else {
+          <section class="settings-page">
+            <aside class="settings-nav panel"><strong>Workspace settings</strong><a class="selected" href="#general">General</a><a href="#security">Security &amp; access</a><a href="#notifications">Notifications</a><a href="#language">Language &amp; region</a></aside>
+            <div class="settings-content">
+              <article id="general" class="settings-card panel">
+                <div class="settings-card-heading"><div><h2>Workspace identity</h2><p>How your organisation appears across the platform.</p></div><span class="settings-symbol">✦</span></div>
+                <label class="form-field"><span>Organisation name</span><input [value]="workspaceName" (input)="workspaceName = $any($event.target).value"></label>
+                <label class="form-field"><span>Department</span><input [value]="departmentName" (input)="departmentName = $any($event.target).value"></label>
+                <label class="form-field"><span>Default content visibility</span><select [value]="defaultScope" (change)="defaultScope = $any($event.target).value"><option>Global</option><option>Regional</option><option>Local</option></select></label>
+              </article>
+              <article id="security" class="settings-card panel">
+                <div class="settings-card-heading"><div><h2>Security &amp; access</h2><p>Keep member accounts secure and accountable.</p></div><span class="settings-symbol">⌑</span></div>
+                <div class="setting-option"><span><strong>Require password change on first sign-in</strong><small>New members must set a personal password before using the portal.</small></span><button class="toggle-switch" [class.on]="securityPreferences.forcePasswordChange" role="switch" [attr.aria-checked]="securityPreferences.forcePasswordChange" aria-label="Require password change on first sign-in" (click)="toggleSecurityPreference('forcePasswordChange')"></button></div>
+                <div class="setting-option"><span><strong>Record access and administrative activity</strong><small>Keep an audit trail for account, protocol and content changes.</small></span><button class="toggle-switch" [class.on]="securityPreferences.auditLogging" role="switch" [attr.aria-checked]="securityPreferences.auditLogging" aria-label="Record access and administrative activity" (click)="toggleSecurityPreference('auditLogging')"></button></div>
+                <div class="setting-option"><span><strong>Member self-registration</strong><small>Accounts are created by an administrator, not through public sign-up.</small></span><button class="toggle-switch" [class.on]="securityPreferences.allowSelfRegistration" role="switch" [attr.aria-checked]="securityPreferences.allowSelfRegistration" aria-label="Member self-registration" (click)="toggleSecurityPreference('allowSelfRegistration')"></button></div>
+              </article>
+              <article id="language" class="settings-card panel">
+                <div class="settings-card-heading"><div><h2>Language &amp; region</h2><p>Configure the initial platform experience.</p></div></div>
+                <div class="language-setting"><span><strong>Platform language</strong><small>More languages can be introduced progressively.</small></span><span class="language-value">English <span>⌄</span></span></div>
+                <button class="primary-button save-settings" type="button" (click)="saveSettings()">{{ settingsSaved ? '✓ Settings saved' : 'Save changes' }}</button>
+              </article>
+              <article id="notifications" class="settings-card panel">
+                <div class="settings-card-heading"><div><h2>Notifications</h2><p>Keep administrators informed about important community activity.</p></div><span class="settings-symbol">♧</span></div>
+                <div class="setting-option"><span><strong>Protocol reading reminders</strong><small>Notify members when an important protocol needs acknowledgement.</small></span><span class="toggle-switch on"></span></div>
+                <div class="setting-option"><span><strong>Security and account alerts</strong><small>Highlight sign-in issues, invitations and account changes.</small></span><span class="toggle-switch on"></span></div>
+              </article>
+            </div>
+          </section>
+        }
+        <footer class="page-footer"><span>© 2026 The Goodnews World</span><span>Built for a connected community <span class="footer-heart">✦</span></span><a href="#" (click)="$event.preventDefault(); selectSection('Settings')">Privacy &amp; security</a></footer>
+      }
+    </div>
+  </main>
+
+  @if (showProtocolModal) {
+    <div class="modal-backdrop" (click)="closeProtocolModal()">
+      <section class="protocol-modal" role="dialog" aria-modal="true" aria-labelledby="protocol-modal-title" (click)="$event.stopPropagation()">
+        <div class="modal-heading">
+          <div>
+            <div class="eyebrow"><span class="eyebrow-line"></span> PROTOCOLS</div>
+            <h2 id="protocol-modal-title">Create a protocol</h2>
+            <p>Start a draft for your community. You can review it before publishing.</p>
+          </div>
+          <button class="modal-close" type="button" aria-label="Close dialog" (click)="closeProtocolModal()">×</button>
+        </div>
+        <form (submit)="$event.preventDefault(); createProtocol()">
+          <label class="form-field">
+            <span>Protocol title <i>*</i></span>
+            <input required maxlength="100" placeholder="e.g. Sunday service protocol" [value]="newProtocolTitle" (input)="newProtocolTitle = $any($event.target).value">
+          </label>
+          <div class="form-row">
+            <label class="form-field">
+              <span>Category <i>*</i></span>
+              <input required maxlength="60" placeholder="e.g. Worship & service" [value]="newProtocolCategory" (input)="newProtocolCategory = $any($event.target).value">
+            </label>
+            <label class="form-field">
+              <span>Visibility scope</span>
+              <select [value]="newProtocolScope" (change)="newProtocolScope = $any($event.target).value">
+                <option>Global</option>
+                <option>Regional</option>
+                <option>Local</option>
+              </select>
+            </label>
+          </div>
+          <label class="form-field">
+            <span>Guidance <small>Optional</small></span>
+            <textarea rows="4" placeholder="Add the guidance members should follow..." [value]="newProtocolContent" (input)="newProtocolContent = $any($event.target).value"></textarea>
+          </label>
+          <div class="modal-footer">
+            <span><span class="draft-dot"></span> Saved as a draft</span>
+            <div>
+              <button class="cancel-button" type="button" (click)="closeProtocolModal()">Cancel</button>
+              <button class="primary-button" type="submit"><span aria-hidden="true">＋</span> Create draft</button>
+            </div>
+          </div>
+        </form>
+      </section>
+    </div>
+  }
+</div>

@@ -1,0 +1,158 @@
+<div class="public-shell">
+  <header class="public-header">
+    <a class="public-brand" routerLink="/">
+      <img src="imagem/logo.png" width="48" alt="logo spirit embassy">
+      <span><strong>SPIRIT EMBASSY</strong><small>PROTOCOL &amp; SECURITY</small></span>
+    </a>
+    <nav aria-label="Main navigation">
+      <a href="#mission">Our mission</a><a href="#platform">Protocol &amp; security</a>
+    </nav>
+    <a class="header-login" routerLink="/login">Team sign in <span>↗</span></a>
+  </header>
+
+  <main>
+    <section class="hero" aria-roledescription="carousel" aria-label="Spirit Embassy highlights" (mouseenter)="pauseSlides()" (mouseleave)="resumeSlides()" (focusin)="pauseSlides()" (focusout)="resumeSlides()">
+      <div class="hero-image" [class]="'hero-image hero-image-' + currentSlide.visual">
+        <img class="hero-photo" [src]="currentSlide.image" [alt]="currentSlide.visualLabel" [attr.fetchpriority]="activeSlide === 0 ? 'high' : 'auto'">
+        @if (currentSlide.creditText && currentSlide.creditUrl) {
+          <a class="hero-photo-credit" [href]="currentSlide.creditUrl" target="_blank" rel="noreferrer">{{ currentSlide.creditText }}</a>
+        }
+      </div>
+      <div class="hero-content">
+        <div class="hero-kicker"><span></span> {{ currentSlide.kicker }}</div>
+        <p class="hero-overline">{{ currentSlide.overline }}</p>
+        <h1>@for (line of currentSlide.title; track $index) { @if (line.accent) { <em>{{ line.text }}</em> } @else { {{ line.text }} } @if ($index < currentSlide.title.length - 1) { <br> } }</h1>
+        <p class="hero-copy">{{ currentSlide.description }}</p>
+        <div class="hero-actions"><a class="gold-button" routerLink="/login">Access team resources <span>→</span></a><a class="quiet-link" href="#platform">Explore protocol &amp; security <span>↓</span></a></div>
+        <div class="hero-meta"><span><i></i> Spirit Embassy protocol &amp; security</span><span>{{ currentSlide.footer }}</span></div>
+      </div>
+      <div class="hero-seal"><span></span><img src="imagem/logo.png" width="48" alt="logo spirit embassy"><small></small></div>
+      <div class="hero-controls" aria-label="Carousel controls">
+        <button type="button" class="hero-arrow" aria-label="Previous slide" (click)="showSlide(activeSlide - 1)">‹</button>
+        <div class="hero-dots" role="group" aria-label="Choose a slide">
+          @for (slide of slides; track $index) {
+            <button type="button" class="hero-dot" [class.active]="activeSlide === $index" [attr.aria-label]="'Show slide ' + ($index + 1) + ': ' + slide.kicker" [attr.aria-current]="activeSlide === $index ? 'true' : null" (click)="showSlide($index)"></button>
+          }
+        </div>
+        <span class="hero-page-number">0{{ activeSlide + 1 }} <span>—</span> 04</span>
+        <button type="button" class="hero-arrow" aria-label="Next slide" (click)="showSlide(activeSlide + 1)">›</button>
+      </div>
+    </section>
+
+    <section class="presence-section" aria-label="Countries in the Spirit Embassy branch preview">
+      <div class="country-slider">
+        <div class="country-track">
+          <div class="country-group">
+            @for (country of countryPreview; track country[0]) {
+              <img class="country-flag" [src]="'/images/country-flags/' + country[0] + '.svg'" [alt]="country[1]" width="56" height="38" loading="lazy">
+            }
+          </div>
+          <div class="country-group" aria-hidden="true">
+            @for (country of countryPreview; track country[0]) {
+              <img class="country-flag" [src]="'/images/country-flags/' + country[0] + '.svg'" alt="" width="56" height="38" loading="lazy">
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mission-section" id="mission">
+      <div class="section-kicker"><span></span> THE SPIRIT EMBASSY MISSION</div>
+      
+      <div class="mission-grid">
+        <div class="mission-content">
+          <h2>One ministry.<br>Many branches.<br><em>One standard.</em></h2>
+          <div class="mission-copy">
+            <p>Spirit Embassy is the GoodNews Church, centred on Christ and the preaching of the Good News of the Kingdom of God.</p>
+            <p>Across its branches, protocol and security teams serve with order, vigilance and care—supporting worship, ministry and every gathering.</p>
+            <a class="underlined-link" routerLink="/login">Guidance for every branch <span>↗</span></a>
+          </div>
+        </div>
+        <div class="mission-visual">
+          <img src="/images/spirit-embassy-world-map.svg" alt="Transparent globe with animated gold arrows connecting the countries in the supplied Spirit Embassy branch preview">
+        </div>
+      </div>
+      <div class="principles">
+        <article><span>01</span><strong>One standard of service</strong><p>Consistent protocol and security guidance for every Spirit Embassy branch.</p></article>
+        <article><span>02</span><strong>Ready at every branch</strong><p>Global direction shaped for regional and local services and assignments.</p></article>
+        <article><span>03</span><strong>Order with care</strong><p>Alert, respectful service that helps create a safe and welcoming environment.</p></article>
+      </div>
+    </section>
+
+    <section class="platform-section" id="platform">
+      <div class="platform-copy">
+        <div class="section-kicker light"><span></span> SPIRIT EMBASSY PROTOCOL &amp; SECURITY</div>
+        <h2>Prepared to serve.<br><em>Ready to protect.</em></h2>
+        <p>Practical standards and training for protocol and security teams serving at Spirit Embassy branches around the world.</p>
+        <a class="light-button" routerLink="/login">Open team resources <span>→</span></a>
+      </div>
+      <div class="platform-preview">
+        <img src="/images/platform-preview.png" alt="Illustrative preview of the Spirit Embassy protocol and security platform, showing branch operations, team guidance and service readiness">
+        <div class="preview-caption"><i></i> PROTOCOL &amp; SECURITY PLATFORM · BRANCH VIEW</div>
+      </div>
+    </section>
+
+    <section class="leadership-section" aria-labelledby="leadership-title">
+      <div class="leadership-heading">
+        <div class="section-kicker"><span></span> SPIRITUAL &amp; MINISTRY LEADERSHIP</div>
+        <h2 id="leadership-title">Honouring the vision.<br><em>Serving every branch.</em></h2>
+        <p>Recognising the spiritual leadership and the protocol and security service that supports Spirit Embassy branches.</p>
+      </div>
+      <div class="leader-gallery" aria-label="GoodNews World leadership gallery">
+        <div class="leader-gallery-viewport">
+          <div class="leader-gallery-track">
+            <div class="leader-gallery-group">
+              @for (leader of leaderSlides; track leader.name) {
+                <article class="leader-card">
+                  <img [class.leader-illustration]="leader.illustration" [src]="leader.image" [alt]="leader.imageAlt">
+                  <div class="leader-card-shade"></div>
+                  <div class="leader-card-caption">
+                    <span>{{ leader.role }}</span>
+                    <strong>{{ leader.name }}</strong>
+                    @if (leader.illustration) {
+                      <small>ILLUSTRATION · PORTRAIT TO BE ADDED</small>
+                    }
+                  </div>
+                  @if (leader.creditText && leader.creditUrl) {
+                    <a class="leader-photo-credit" [href]="leader.creditUrl" target="_blank" rel="noreferrer">{{ leader.creditText }}</a>
+                  }
+                </article>
+              }
+            </div>
+            <div class="leader-gallery-group" aria-hidden="true">
+              @for (leader of leaderSlides; track leader.name) {
+                <article class="leader-card">
+                  <img class="leader-gallery-copy" [class.leader-illustration]="leader.illustration" [src]="leader.image" alt="">
+                  <div class="leader-card-shade"></div>
+                  <div class="leader-card-caption">
+                    <span>{{ leader.role }}</span>
+                    <strong>{{ leader.name }}</strong>
+                    @if (leader.illustration) {
+                      <small>ILLUSTRATION · PORTRAIT TO BE ADDED</small>
+                    }
+                  </div>
+                </article>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section #closingSection class="closing-section">
+      <div #closingParallax class="closing-parallax" aria-hidden="true">
+        <img src="/images/hero-protocol-cc-by.png" alt="">
+        <img src="/images/protocol-team-woman.png" alt="">
+        <div class="closing-parallax-shade"></div>
+      </div>
+      <div class="closing-copy">
+        <div class="closing-mark"></div><div class="section-kicker"><span></span> SERVING EVERY SPIRIT EMBASSY BRANCH</div>
+        <h2>Ready to serve<br><em>with excellence?</em></h2>
+        <p>Sign in to access branch guidance, team standards and security resources for your assignment.</p>
+        <a class="gold-button" routerLink="/login">Access protocol &amp; security <span>→</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="public-footer"><a class="public-brand" routerLink="/"><img src="imagem/logo.png" width="48" alt="logo spirit embassy"><span><strong>SPIRIT EMBASSY</strong><small>PROTOCOL &amp; SECURITY</small></span></a><span>© 2026 Spirit Embassy · The GoodNews World</span><a routerLink="/login">Team sign in ↗</a></footer>
+</div>
