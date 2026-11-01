@@ -9,6 +9,7 @@ export class PortalSession {
   memberName = '';
   memberEmail = '';
   memberAvatar = '';
+  memberEmailVisible = false;
   requiresPasswordChange = false;
 
   signIn(email: string): void {
@@ -19,21 +20,23 @@ export class PortalSession {
     const profile = this.readProfile(this.memberEmail);
     this.memberName = profile?.name ?? defaultName;
     this.memberAvatar = profile?.avatar ?? '';
+    this.memberEmailVisible = profile?.emailVisible ?? false;
   }
 
-  updateProfile(name: string, avatar: string): void {
+  updateProfile(name: string, avatar: string, emailVisible: boolean): void {
     const normalizedName = name.trim();
     if (!normalizedName) {
       throw new Error('Enter your full name before saving your profile.');
     }
 
-    const profile = { name: normalizedName, avatar };
+    const profile = { name: normalizedName, avatar, emailVisible };
     localStorage.setItem(this.profileStorageKey(this.memberEmail), JSON.stringify(profile));
     this.memberName = normalizedName;
     this.memberAvatar = avatar;
+    this.memberEmailVisible = emailVisible;
   }
 
-  private readProfile(email: string): { name: string; avatar: string } | null {
+  private readProfile(email: string): { name: string; avatar: string; emailVisible: boolean } | null {
     const storedProfile = localStorage.getItem(this.profileStorageKey(email));
     if (!storedProfile) {
       return null;
@@ -46,11 +49,18 @@ export class PortalSession {
       !('name' in profile) ||
       typeof profile.name !== 'string' ||
       !('avatar' in profile) ||
-      typeof profile.avatar !== 'string'
+      typeof profile.avatar !== 'string' ||
+      ('emailVisible' in profile && typeof profile.emailVisible !== 'boolean')
     ) {
       throw new Error('The saved member profile is invalid. Clear this browser profile and sign in again.');
     }
-    return { name: profile.name, avatar: profile.avatar };
+    return {
+      name: profile.name,
+      avatar: profile.avatar,
+      emailVisible: 'emailVisible' in profile && typeof profile.emailVisible === 'boolean'
+        ? profile.emailVisible
+        : false
+    };
   }
 
   private profileStorageKey(email: string): string {
@@ -71,6 +81,7 @@ export class PortalSession {
     this.memberName = '';
     this.memberEmail = '';
     this.memberAvatar = '';
+    this.memberEmailVisible = false;
     this.requiresPasswordChange = false;
   }
 

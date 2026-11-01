@@ -7,6 +7,7 @@ export interface DirectoryPerson {
   name: string;
   role: string;
   email?: string;
+  emailVisible?: boolean;
   scope: DirectoryScope;
   region: string;
   branch: string;

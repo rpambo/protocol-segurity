@@ -30,7 +30,7 @@ export const routes: Routes = [
     canActivate: [requirePortalSession],
     children: [
       { path: '', component: MemberHome, title: 'Member home | Spirit Embassy' },
-      { path: 'people', component: MemberPeople, title: 'People | Spirit Embassy' },
+      { path: 'people', component: MemberPeople, title: 'Protocol & Security | Spirit Embassy' },
       { path: 'people/:id', component: MemberPeople, title: 'Person profile | Spirit Embassy' },
       { path: 'chat', component: MemberChatPage, title: 'Community chat | Spirit Embassy' },
       { path: 'protocols', redirectTo: 'people', pathMatch: 'full' },

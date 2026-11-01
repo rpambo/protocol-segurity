@@ -11,7 +11,7 @@ import { PortalSession } from '../portal-session';
     <header class="page-heading">
       <div>
         <div class="member-kicker"><span></span> YOUR COMMUNITY</div>
-        <h1>People</h1>
+        <h1>Protocol &amp; Security</h1>
         <p>Meet the people serving across our global, regional and local communities.</p>
       </div>
       <span class="heading-seal" aria-hidden="true">✳</span>
@@ -54,8 +54,10 @@ import { PortalSession } from '../portal-session';
           <div><small><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"></circle><path d="M3.8 12h16.4M12 3.5c2.2 2.3 3.3 5.1 3.3 8.5s-1.1 6.2-3.3 8.5c-2.2-2.3-3.3-5.1-3.3-8.5s1.1-6.2 3.3-8.5Z"></path></svg> REGION</small><strong>{{ person.region }}</strong></div>
           <div><small><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 20.5h17M5 20V9l7-5 7 5v11M9 20v-6h6v6M8 10h.01M16 10h.01"></path></svg> BRANCH / OFFICE</small><strong>{{ person.branch }}</strong></div>
           <div><small><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"></circle><path d="m8 12 2.6 2.6L16.5 9"></path></svg> ACCOUNT STATUS</small><strong><i [class.pending]="person.status !== 'Active'"></i>{{ person.status }}</strong></div>
-          @if (person.email) {
+          @if (person.email && canShowEmail(person)) {
             <div><small><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="13" rx="2"></rect><path d="m4.5 7 7.5 6 7.5-6"></path></svg> EMAIL</small><strong><a [href]="'mailto:' + person.email">{{ person.email }}</a></strong></div>
+          } @else if (person.email) {
+            <div><small><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg> EMAIL</small><strong>Private</strong></div>
           }
         </div>
       </section>
@@ -181,6 +183,13 @@ export class MemberPeople {
 
   protected isOwnProfile(person: DirectoryPerson): boolean {
     return this.personEmail(person).toLowerCase() === this.session.memberEmail.toLowerCase();
+  }
+
+  protected canShowEmail(person: DirectoryPerson): boolean {
+    if (this.isOwnProfile(person)) {
+      return this.session.memberEmailVisible;
+    }
+    return person.emailVisible === true;
   }
 
   protected profileInvite(person: DirectoryPerson): PrivateChatInvite | null {

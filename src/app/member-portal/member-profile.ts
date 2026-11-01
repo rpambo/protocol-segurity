@@ -59,6 +59,10 @@ import { PortalSession } from '../portal-session';
             <label>USERNAME<input disabled [value]="username" autocomplete="username"></label>
             <label>MEMBER SINCE<input disabled value="October 2026"></label>
           </div>
+          <label class="email-visibility">
+            <input type="checkbox" [checked]="draftEmailVisible" [disabled]="!editing" (change)="updateEmailVisibility($event)">
+            <span><strong>Show my email on my member profile</strong><small>When disabled, other members cannot see your email in the Protocol &amp; Security directory.</small></span>
+          </label>
           @if (profileError) { <p class="profile-error" role="alert">{{ profileError }}</p> }
           @if (editing) { <p class="profile-save-note">Your name and profile photo are saved in this browser for this account.</p> }
         </div>
@@ -128,6 +132,11 @@ import { PortalSession } from '../portal-session';
     .details-grid label{display:flex;flex-direction:column;gap:6px;color:#99998d;font-size:7px;letter-spacing:.08em}
     .details-grid input{height:34px;padding:0 9px;border:1px solid #e8e8e1;border-radius:3px;color:#657065;background:#fff;font:9px Arial,sans-serif}
     .details-grid input:disabled{color:#657065;background:#fafaf6}
+    .email-visibility{display:flex;align-items:flex-start;gap:9px;margin-top:14px;padding:11px;border:1px solid #e8e7df;border-radius:3px;background:#fbfaf6}
+    .email-visibility>input{width:14px;height:14px;flex:0 0 auto;margin:1px 0 0;accent-color:#75663e}
+    .email-visibility>span{display:flex;flex-direction:column;gap:4px}
+    .email-visibility strong{color:#5d685a;font-size:8px;font-weight:600;letter-spacing:normal}
+    .email-visibility small{color:#92958a;font-size:7px;letter-spacing:normal;line-height:1.5}
     .profile-save-note,.profile-error{margin:12px 0 0;padding:10px;border:1px solid #e8e1c9;border-radius:3px;color:#796b40;background:#f8f5e9;font-size:8px;line-height:1.5}
     .profile-error{border-color:#e4c9c4;color:#8a3d32;background:#fff5f3}
     .community-info{display:flex;align-items:center;gap:9px}
@@ -160,6 +169,7 @@ export class MemberProfile {
   protected editing = false;
   protected draftName = this.session.memberName;
   protected draftAvatar = this.session.memberAvatar;
+  protected draftEmailVisible = this.session.memberEmailVisible;
   protected profileError = '';
 
   protected get username(): string {
@@ -169,12 +179,17 @@ export class MemberProfile {
   protected startEditing(): void {
     this.draftName = this.session.memberName;
     this.draftAvatar = this.session.memberAvatar;
+    this.draftEmailVisible = this.session.memberEmailVisible;
     this.profileError = '';
     this.editing = true;
   }
 
   protected updateDraftName(event: Event): void {
     this.draftName = (event.target as HTMLInputElement).value;
+  }
+
+  protected updateEmailVisibility(event: Event): void {
+    this.draftEmailVisible = (event.target as HTMLInputElement).checked;
   }
 
   protected onAvatarSelected(event: Event): void {
@@ -216,7 +231,7 @@ export class MemberProfile {
 
   protected saveProfile(): void {
     try {
-      this.session.updateProfile(this.draftName, this.draftAvatar);
+      this.session.updateProfile(this.draftName, this.draftAvatar, this.draftEmailVisible);
       this.editing = false;
       this.profileError = '';
     } catch (error) {
@@ -229,6 +244,7 @@ export class MemberProfile {
   protected cancelEditing(): void {
     this.draftName = this.session.memberName;
     this.draftAvatar = this.session.memberAvatar;
+    this.draftEmailVisible = this.session.memberEmailVisible;
     this.profileError = '';
     this.editing = false;
   }
