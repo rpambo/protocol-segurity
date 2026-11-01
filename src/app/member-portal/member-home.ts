@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { PortalSession } from '../portal-session';
-import { ProtocolCatalog } from '../protocol-catalog';
+import { MemberDirectory } from '../member-directory';
 
 @Component({
   selector: 'app-member-home',
@@ -9,16 +9,16 @@ import { ProtocolCatalog } from '../protocol-catalog';
   template: `
     <section class="member-welcome">
       <div><div class="member-kicker"><span></span> MONDAY, OCTOBER 26, 2026</div><h1>Goodnews to you, <em>{{ firstName }}</em></h1><p>A good day to gather, grow and move forward together.</p></div>
-      <a routerLink="/portal/protocols" class="welcome-action">Your protocols <span>→</span></a>
+      <a routerLink="/portal/people" class="welcome-action">Our people <span>→</span></a>
     </section>
-    <section class="member-hero"><div class="member-hero-image"><span>✳</span><small>THE GOODNEWS WORLD</small><strong>ONE COMMUNITY.<br>ONE STANDARD.</strong></div><div class="member-hero-copy"><div class="member-kicker"><span></span> A NOTE FOR OUR COMMUNITY</div><h2>Rooted in service.<br><em>Growing together.</em></h2><p>Every gathering is an opportunity to welcome one another, serve with purpose and strengthen the bonds that make us one community.</p><a routerLink="/portal/protocols">Explore community protocols <span>↗</span></a><small>THE GOODNEWS WORLD <i>·</i> OCTOBER 2026</small></div></section>
+    <section class="member-hero"><div class="member-hero-image"><span>✳</span><small>THE GOODNEWS WORLD</small><strong>ONE COMMUNITY.<br>ONE STANDARD.</strong></div><div class="member-hero-copy"><div class="member-kicker"><span></span> A NOTE FOR OUR COMMUNITY</div><h2>Rooted in service.<br><em>Growing together.</em></h2><p>Every gathering is an opportunity to welcome one another, serve with purpose and strengthen the bonds that make us one community.</p><a routerLink="/portal/people">Meet our community <span>↗</span></a><small>THE GOODNEWS WORLD <i>·</i> OCTOBER 2026</small></div></section>
     <section class="member-section-heading"><div><div class="member-kicker"><span></span> YOUR COMMUNITY</div><h2>Everything in its place.</h2><p>Guidance and resources, prepared for you.</p></div><span class="branch-label"><i></i> LAGOS CENTRAL</span></section>
     <section class="member-cards">
-      <a class="member-module-card protocol-card" routerLink="/portal/protocols"><span class="module-card-top"><i>▤</i><small>{{ protocolCount }} GUIDES</small></span><h3>Protocols</h3><p>Shared guidance for our services and community.</p><span class="module-card-link">Explore protocols <b>→</b></span><span class="module-art protocol-art"></span></a>
-      <a class="member-module-card dress-card" routerLink="/portal/dress-code"><span class="module-card-top"><i>◇</i><small>THIS WEEK</small></span><h3>Dress code</h3><p>Know what to wear at our next gathering.</p><span class="module-card-link">View weekly guidance <b>→</b></span><span class="module-art dress-art-mark"></span></a>
-      <a class="member-module-card media-card" routerLink="/portal/media"><span class="module-card-top"><i>▧</i><small>06 RESOURCES</small></span><h3>Media library</h3><p>Videos, documents and moments from our family.</p><span class="module-card-link">Browse resources <b>→</b></span><span class="module-art media-art-mark"></span></a>
+      <a class="member-module-card protocol-card" routerLink="/portal/people"><span class="module-card-top"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"></circle><path d="M2.8 20v-1.3a5 5 0 0 1 5-5h2.4a5 5 0 0 1 5 5V20m.8-14.8a3.2 3.2 0 0 1 0 6.1m2 2.8a4.5 4.5 0 0 1 3.2 4.3V20"></path></svg></i><small>{{ peopleCount }} PEOPLE</small></span><h3>People</h3><p>Meet members and leaders from across our community.</p><span class="module-card-link">Explore people <b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"></path></svg></b></span><span class="module-art protocol-art"></span></a>
+      <a class="member-module-card dress-card" routerLink="/portal/dress-code"><span class="module-card-top"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.2 5.3a3.8 3.8 0 0 0 7.6 0m-7.6 0-5.3 3 2.2 4 2.1-1.1v9.3h11.6v-9.3l2.1 1.1 2.2-4-5.3-3"></path></svg></i><small>THIS WEEK</small></span><h3>Dress code</h3><p>Know what to wear at our next gathering.</p><span class="module-card-link">View weekly guidance <b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"></path></svg></b></span><span class="module-art dress-art-mark"></span></a>
+      <a class="member-module-card media-card" routerLink="/portal/media"><span class="module-card-top"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4" width="17" height="16" rx="2"></rect><circle cx="8.5" cy="9" r="1.5"></circle><path d="m4.5 17 5-5 3.3 3.2 2.2-2.1 4.5 4.4"></path></svg></i><small>06 RESOURCES</small></span><h3>Media library</h3><p>Videos, documents and moments from our family.</p><span class="module-card-link">Browse resources <b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"></path></svg></b></span><span class="module-art media-art-mark"></span></a>
     </section>
-    <section class="member-bottom-grid"><article class="reading-card"><div class="member-section-heading compact"><div><div class="member-kicker"><span></span> FOR YOU</div><h2>Ready when you are.</h2></div><a routerLink="/portal/protocols">View all <b>→</b></a></div>@for (protocol of recentProtocols; track protocol.id) { <a class="reading-item" [routerLink]="['/portal/protocols', protocol.id]"><span class="reading-icon">▤</span><span><strong>{{ protocol.title }}</strong><small>{{ protocol.category }} <i>·</i> {{ protocol.scope }}</small></span><span class="new-tag">{{ protocol.status === 'Draft' ? 'NEW' : protocol.status === 'Needs review' ? 'REVIEW' : 'GUIDE' }}</span><span aria-hidden="true">→</span></a> } @empty { <p class="no-protocols">No protocols have been added yet.</p> }</article>
+    <section class="member-bottom-grid"><article class="reading-card"><div class="member-section-heading compact"><div><div class="member-kicker"><span></span> YOUR COMMUNITY</div><h2>People who serve.</h2></div><a routerLink="/portal/people">View all <b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"></path></svg></b></a></div>@for (person of recentPeople; track person.id) { <a class="reading-item" [routerLink]="['/portal/people', person.id]"><span class="reading-icon">{{ person.initials }}</span><span><strong>{{ person.name }}</strong><small>{{ person.role }} <i>·</i> {{ person.scope }}</small></span><span class="new-tag">{{ person.branch }}</span><span aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"></path></svg></span></a> }</article>
       <article class="member-dress-preview"><div class="member-kicker"><span></span> THIS SUNDAY</div><h2>Gather with<br><em>confidence.</em></h2><p>White shirt · Dark trousers</p><a routerLink="/portal/dress-code">See this week's dress code <span>→</span></a><div class="preview-flower">✳</div></article></section>
   `,
   styles: [`
@@ -26,17 +26,17 @@ import { ProtocolCatalog } from '../protocol-catalog';
 })
 export class MemberHome {
   protected readonly session = inject(PortalSession);
-  private readonly protocolCatalog = inject(ProtocolCatalog);
+  private readonly memberDirectory = inject(MemberDirectory);
 
   protected get firstName(): string {
     return this.session.memberName.split(' ')[0] || 'friend';
   }
 
-  protected get protocolCount(): number {
-    return this.protocolCatalog.protocols.length;
+  protected get peopleCount(): number {
+    return this.memberDirectory.people.length;
   }
 
-  protected get recentProtocols() {
-    return this.protocolCatalog.protocols.slice(0, 2);
+  protected get recentPeople() {
+    return this.memberDirectory.people.slice(0, 2);
   }
 }

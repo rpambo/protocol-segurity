@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { PortalSession } from '../portal-session';
-import { ProtocolCatalog } from '../protocol-catalog';
+import { MemberDirectory } from '../member-directory';
 
 @Component({
   selector: 'app-member-portal',
@@ -11,11 +11,11 @@ import { ProtocolCatalog } from '../protocol-catalog';
 })
 export class MemberPortal {
   protected readonly session = inject(PortalSession);
-  private readonly protocolCatalog = inject(ProtocolCatalog);
+  private readonly memberDirectory = inject(MemberDirectory);
   protected menuOpen = false;
 
-  protected get protocolCount(): number {
-    return this.protocolCatalog.protocols.length;
+  protected get peopleCount(): number {
+    return this.memberDirectory.people.length;
   }
 
   protected get memberInitials(): string {

@@ -28,3 +28,27 @@ input:focus-visible {
   outline: 2px solid #c5a451;
   outline-offset: 2px;
 }
+
+.member-module-card .module-card-top > i {
+  display: grid;
+  place-items: center;
+}
+
+.member-module-card .module-card-top > i > svg {
+  display: block;
+  width: 26px;
+  height: 26px;
+}
+
+.member-module-card .module-card-link b svg,
+.member-section-heading a b svg {
+  display: block;
+  width: 15px;
+  height: 15px;
+}
+
+.reading-card a > span:last-child svg {
+  display: block;
+  width: 16px;
+  height: 16px;
+}
