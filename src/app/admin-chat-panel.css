@@ -1,0 +1,59 @@
+:host { display:block }
+.admin-chat-page { display:flex; flex-direction:column; gap:16px }
+.admin-chat-heading { display:flex; align-items:flex-start; justify-content:space-between; gap:14px }
+.admin-chat-kicker { display:flex; align-items:center; gap:7px; color:#9b8750; font-size:8px; font-weight:650; letter-spacing:.15em }
+.admin-chat-kicker span { width:16px; height:1px; background:#c7aa57 }
+.admin-chat-heading h1 { margin:9px 0 5px; color:#33463b; font:500 27px Georgia,serif }
+.admin-chat-heading p { margin:0; color:#8d958a; font-size:10px }
+.admin-chat-local-tag { padding:5px 8px; border:1px solid #e8e2cf; border-radius:4px; color:#8d7940; background:#f8f5eb; font-size:7px; font-weight:650; letter-spacing:.1em }
+.admin-chat-layout { display:grid; grid-template-columns:190px minmax(0,1fr); gap:12px; min-height:calc(100vh - 240px) }
+.admin-chat-sidebar { display:flex; flex-direction:column; align-items:stretch; gap:7px; padding:12px; border:1px solid #e9e9e1; border-radius:8px; background:#fffefa }
+.admin-chat-sidebar-label { margin:2px 0 5px; color:#9b9e94; font-size:7px; font-weight:700; letter-spacing:.13em }
+.admin-chat-room-choice { display:flex; align-items:center; gap:9px; min-height:47px; padding:7px; border:1px solid transparent; border-radius:6px; color:#657064; background:transparent; text-align:left; cursor:pointer }
+.admin-chat-room-choice.selected { border-color:#e7e1cd; color:#66552d; background:#f8f5eb }
+.admin-chat-choice-icon { display:grid; place-items:center; width:27px; height:27px; flex:0 0 auto; border-radius:6px; color:#8e783c; background:#f3f0e5; font-size:17px }
+.admin-chat-room-choice>span:last-child { display:flex; min-width:0; flex-direction:column; gap:4px }
+.admin-chat-room-choice strong { font-size:9px; font-weight:650 }
+.admin-chat-room-choice small { overflow:hidden; color:#93988f; font-size:7px; text-overflow:ellipsis; white-space:nowrap }
+.admin-chat-location-label { margin:8px 0 0; color:#7c8378; font-size:8px; font-weight:650 }
+.admin-chat-sidebar select { width:100%; min-width:0; height:32px; padding:0 7px; border:1px solid #e4e6de; border-radius:5px; color:#526052; background:#fff; font:9px Arial,sans-serif }
+.admin-chat-sidebar select:disabled { color:#9a9f96; background:#f4f5f1 }
+.admin-chat-room { display:flex; min-height:calc(100vh - 240px); flex-direction:column; overflow:hidden }
+.admin-chat-room-heading { display:flex; align-items:center; gap:10px; padding:14px 17px; border-bottom:1px solid #edede6; background:#fffefa }
+.admin-chat-room-icon { display:grid; place-items:center; width:34px; height:34px; flex:0 0 auto; border-radius:8px; color:#8e783c; background:#f4f0e2 }
+.admin-chat-room-icon svg { width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round }
+.admin-chat-room-heading>span:nth-child(2) { display:flex; flex:1; flex-direction:column; gap:4px }
+.admin-chat-room-heading>span:nth-child(2)>strong { color:#435348; font-size:10px; font-weight:650 }
+.admin-chat-room-heading>span:nth-child(2)>small,.admin-chat-message-meta time { color:#92988e; font-size:8px }
+.admin-chat-message-count { color:#92988e; font-size:8px }
+.admin-chat-messages { display:flex; flex:1; flex-direction:column; gap:13px; overflow-y:auto; padding:18px; background:#fbfbf8 }
+.admin-chat-empty,.admin-chat-unavailable { display:flex; min-height:210px; flex-direction:column; align-items:center; justify-content:center; padding:25px; text-align:center }
+.admin-chat-empty>span { display:grid; place-items:center; width:42px; height:42px; margin-bottom:11px; border-radius:50%; color:#a88c44; background:#f4f0e4; font-size:19px }
+.admin-chat-empty strong,.admin-chat-unavailable h2 { color:#46574a; font:500 17px Georgia,serif }
+.admin-chat-empty p,.admin-chat-unavailable p { margin:6px 0 0; color:#92988e; font-size:9px; line-height:1.55 }
+.admin-chat-message { display:flex; align-items:flex-start; gap:8px; max-width:78% }
+.admin-chat-message.own { align-self:flex-end; flex-direction:row-reverse }
+.admin-chat-avatar { display:grid; place-items:center; width:28px; height:28px; flex:0 0 auto; border-radius:50%; color:#54715b; background:#e7eee6; font-size:8px; font-weight:650 }
+.admin-chat-message-body { min-width:0; padding:9px 11px; border:1px solid #ecece5; border-radius:8px; background:#fff }
+.admin-chat-message.own .admin-chat-message-body { border-color:#e8e1cd; background:#f8f5eb }
+.admin-chat-message-meta { display:flex; align-items:center; gap:9px; margin-bottom:5px }
+.admin-chat-message-meta strong { color:#536154; font-size:8px; font-weight:650 }
+.admin-chat-message-body p { margin:0; color:#586258; font-size:10px; line-height:1.55; overflow-wrap:anywhere }
+.admin-chat-composer { display:flex; gap:8px; padding:12px 14px; border-top:1px solid #edede6; background:#fffefa }
+.admin-chat-composer input { flex:1; min-width:0; height:36px; padding:0 10px; border:1px solid #e4e6de; border-radius:5px; outline:0; color:#435148; font:10px Arial,sans-serif }
+.admin-chat-composer input:focus { border-color:#82997e; box-shadow:0 0 0 2px #82997e24 }
+.admin-chat-composer button { min-width:70px; padding:0 13px; border:1px solid #806c36; border-radius:5px; color:#fff; background:#806c36; font:600 9px Arial,sans-serif; cursor:pointer }
+.admin-chat-composer button:disabled { border-color:#dfe3dc; color:#899188; background:#e9ece6; cursor:not-allowed }
+.admin-chat-error { margin:0; padding:9px 12px; color:#a34e43; background:#f8e9e6; font-size:9px; line-height:1.5 }
+.admin-chat-storage-note { margin:0; padding:0 14px 12px; color:#999e95; font-size:8px; background:#fffefa }
+@media(max-width:650px) {
+  .admin-chat-layout { grid-template-columns:1fr; min-height:0 }
+  .admin-chat-sidebar { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:5px; padding:8px }
+  .admin-chat-sidebar-label { grid-column:1/-1 }
+  .admin-chat-room-choice { flex-direction:column; align-items:flex-start; min-height:62px; gap:5px }
+  .admin-chat-room-choice>span:last-child { max-width:100% }
+  .admin-chat-location-label,.admin-chat-sidebar select { grid-column:1/-1 }
+  .admin-chat-room { min-height:calc(100vh - 190px) }
+  .admin-chat-message { max-width:92% }
+  .admin-chat-heading h1 { font-size:24px }
+}

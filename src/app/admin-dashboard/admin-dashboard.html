@@ -1,31 +1,55 @@
-<div class="app-shell">
-  <aside class="sidebar">
-    <a class="brand" href="#" (click)="$event.preventDefault(); selectSection('Overview')">
-      <span class="brand-mark" aria-hidden="true">
-        <img src="imagem/logo.png" width="48" alt="logo spirit embassy">
-      </span>
-      <span class="brand-copy">
-        <span class="brand-name">SPIRIT EMBASSY</span>
-        <span class="brand-subtitle">PROTOCOL &amp; SECURITY</span>
-      </span>
-    </a>
-
-    <div class="workspace-switcher">
-      <span class="workspace-avatar">G</span>
-      <span class="workspace-copy"><strong>The Goodnews World</strong><small>Global workspace</small></span>
-      <span class="switcher-chevron">⌄</span>
+<div class="app-shell admin-dashboard">
+  <aside class="sidebar" [class.mobile-open]="mobileMenuOpen">
+    <div class="sidebar-brand-row">
+      <a class="brand" href="#" (click)="$event.preventDefault(); selectSection('Overview')">
+        <span class="brand-mark" aria-hidden="true">
+          <img src="imagem/logo.png" width="48" alt="logo spirit embassy">
+        </span>
+        <span class="brand-copy">
+          <span class="brand-name">SPIRIT EMBASSY</span>
+          <span class="brand-subtitle">PROTOCOL &amp; SECURITY</span>
+        </span>
+      </a>
+      <button class="mobile-menu-toggle" type="button" [attr.aria-expanded]="mobileMenuOpen" aria-controls="admin-side-navigation" [attr.aria-label]="mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'" (click)="toggleMobileMenu()">
+        @if (mobileMenuOpen) {
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"></path></svg>
+        } @else {
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        }
+      </button>
     </div>
 
-    <nav class="side-navigation" aria-label="Main navigation">
+    <div class="workspace-switcher">
+      <span class="workspace-avatar"><img src="imagem/logo.png" alt=""></span>
+      <span class="workspace-copy"><strong>The Goodnews World</strong><small>Global workspace</small></span>
+      <span class="switcher-chevron" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m7 10 5 5 5-5"></path></svg></span>
+    </div>
+
+    <nav id="admin-side-navigation" class="side-navigation" aria-label="Main navigation">
       @for (group of navigation; track group.label) {
         <div class="nav-group">
           <p class="nav-heading">{{ group.label }}</p>
           @for (item of group.items; track item.name) {
+            @if (item.name !== 'A Note for Our Community' || adminSession.adminLevel === 'global-admin') {
             <button class="nav-link" [class.active]="activeSection === item.name" (click)="selectSection(item.name)">
-              <span class="nav-icon" aria-hidden="true">{{ item.icon }}</span>
-              <span>{{ item.name }}</span>
-              @if (item.name === 'Protocols') { <span class="nav-count">24</span> }
+              <span class="nav-icon" aria-hidden="true">
+                @switch (item.icon) {
+                  @case ('overview') { <svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="1"></rect><rect x="13.5" y="3.5" width="7" height="7" rx="1"></rect><rect x="3.5" y="13.5" width="7" height="7" rx="1"></rect><rect x="13.5" y="13.5" width="7" height="7" rx="1"></rect></svg> }
+                  @case ('protocols') { <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"></circle><path d="M3 20v-1a6 6 0 0 1 12 0v1m2-13a3 3 0 0 1 0 6m1 2a4 4 0 0 1 3 4v1"></path></svg> }
+                  @case ('dress-code') { <svg viewBox="0 0 24 24"><path d="M8.2 5.3a3.8 3.8 0 0 0 7.6 0m-7.6 0-5.3 3 2.2 4 2.1-1.1v9.3h11.6v-9.3l2.1 1.1 2.2-4-5.3-3"></path></svg> }
+                  @case ('media') { <svg viewBox="0 0 24 24"><rect x="3.5" y="4" width="17" height="16" rx="2"></rect><circle cx="8.5" cy="9" r="1.5"></circle><path d="m4.5 17 5-5 3.3 3.2 2.2-2.1 4.5 4.4"></path></svg> }
+                  @case ('users') { <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"></circle><path d="M3 20v-1a5 5 0 0 1 5-5h2a5 5 0 0 1 5 5v1m1-14a3 3 0 0 1 0 6m2 2a4 4 0 0 1 3 4v2"></path></svg> }
+                  @case ('regions') { <svg viewBox="0 0 24 24"><path d="M3.5 20.5h17M5 20V9l7-5 7 5v11M9 20v-6h6v6M8 10h.01M16 10h.01"></path></svg> }
+                  @case ('reports') { <svg viewBox="0 0 24 24"><path d="M4 19.5h16M6.5 16V10m5 6V5m5 11v-4"></path><path d="m5 7 5-3 5 2 4-3"></path></svg> }
+                  @case ('help') { <svg viewBox="0 0 24 24"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H6l-3 2v-6.5A7.5 7.5 0 1 1 20 11.5Z"></path><path d="M9.5 9a2.5 2.5 0 1 1 4.2 1.8c-.9.8-1.7 1-1.7 2.2M12 16.5h.01"></path></svg> }
+                  @case ('chat') { <svg viewBox="0 0 24 24"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H6l-3 2v-6.5A7.5 7.5 0 1 1 20 11.5Z"></path><path d="M8 11h8m-8 3h5"></path></svg> }
+                  @case ('note') { <svg viewBox="0 0 24 24"><path d="M5 4.5h14v15H5z"></path><path d="M8 8h8m-8 4h8m-8 4h5"></path></svg> }
+                  @case ('settings') { <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="m19.4 15 .1.1 1.2 1-1.4 2.4-1.5-.5a7.8 7.8 0 0 1-1.7 1l-.3 1.6h-2.8l-.3-1.6a7.8 7.8 0 0 1-1.7-1l-1.5.5-1.4-2.4 1.2-1a7 7 0 0 1 0-2l-1.2-1 1.4-2.4 1.5.5a7.8 7.8 0 0 1 1.7-1l.3-1.6h2.8l.3 1.6a7.8 7.8 0 0 1 1.7 1l1.5-.5 1.4 2.4-1.2 1a7 7 0 0 1-.1 2Z"></path></svg> }
+                }
+              </span>
+              <span>{{ item.name === 'Protocols' ? 'Protocol & Security' : item.name }}</span>
             </button>
+            }
           }
         </div>
       }
@@ -35,21 +59,29 @@
       <div class="support-card">
         <strong>Here to help</strong>
         <span>Find guidance for using your platform.</span>
-        <button type="button">Visit help centre <span aria-hidden="true">↗</span></button>
+        <button type="button" (click)="openHelpCenter()">Visit help centre <svg class="inline-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></button>
       </div>
       <div class="sidebar-foot"><span class="status-dot"></span> All systems operational <span class="foot-version">v1.0</span></div>
     </div>
   </aside>
+  @if (mobileMenuOpen) {
+    <button class="mobile-nav-backdrop" type="button" aria-label="Close navigation menu" (click)="toggleMobileMenu()"></button>
+  }
 
   <main class="main-area">
     <header class="topbar">
       <div class="breadcrumbs"><span>Workspace</span><span class="crumb-separator">/</span><strong>{{ sectionTitle }}</strong></div>
       <div class="topbar-actions">
-        <span class="today-label">Monday, October 26, 2026</span>
-        <button class="icon-button search-shortcut" type="button" aria-label="Search" (click)="selectSection('Protocols')">⌕</button>
+        @if (!showSearch) {
+          <span class="today-label">{{ systemDateLabel }}</span>
+        }
+        @if (showSearch) {
+          <label class="table-search topbar-search"><input type="search" aria-label="Search Protocol & Security" placeholder="Search Protocol & Security..." autofocus [value]="searchQuery" (input)="searchQuery = $any($event.target).value" (keydown.escape)="toggleSearch()"></label>
+        }
+        <button class="icon-button search-shortcut" type="button" [attr.aria-label]="showSearch ? 'Close search' : 'Search'" [attr.aria-expanded]="showSearch" (click)="toggleSearch()"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 4.5 4.5"></path></svg></button>
         <div class="popover-anchor">
           <button class="icon-button notification-button" type="button" aria-label="Notifications" (click)="toggleNotifications()">
-            ♧<span class="notification-dot"></span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path><path d="M10 21h4"></path></svg><span class="notification-dot"></span>
           </button>
           @if (showNotifications) {
             <div class="popover notification-popover">
@@ -61,15 +93,16 @@
         <span class="topbar-divider"></span>
         <div class="popover-anchor">
           <button class="profile-trigger" type="button" (click)="toggleProfileMenu()">
-            <span class="profile-avatar">RK</span>
-            <span class="profile-name"><strong>Rafael Kitoco</strong><small>Global administrator</small></span>
-            <span class="switcher-chevron">⌄</span>
+            <span class="profile-avatar">{{ currentAdminInitials }}</span>
+            <span class="profile-name"><strong>{{ currentAdminName }}</strong><small>{{ currentAdminRole }}</small></span>
+            <span class="switcher-chevron" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m7 10 5 5 5-5"></path></svg></span>
           </button>
           @if (showProfileMenu) {
             <div class="popover profile-popover">
-              <strong>Rafael Kitoco</strong>
-              <span>Global administrator</span>
-              <button type="button" (click)="selectSection('Settings')">Account settings</button>
+              <strong>{{ currentAdminName }}</strong>
+              <span>{{ adminSession.adminEmail }}</span>
+              <button type="button" (click)="openProfile()">My profile</button>
+              <button class="sign-out-button" type="button" (click)="signOut()">Log out</button>
             </div>
           }
         </div>
@@ -80,19 +113,26 @@
       @if (activeSection === 'Overview') {
         <section class="welcome-row">
           <div>
-            <div class="eyebrow"><span class="eyebrow-line"></span> MONDAY, OCTOBER 26</div>
-            <h1>GoodNews to you, Rafael <span class="wave">✳</span></h1>
+            <div class="eyebrow"><span class="eyebrow-line"></span> {{ systemDateLabel | uppercase }}</div>
+            <h1>GoodNews to you, {{ currentAdminName }} <span class="wave">✳</span></h1>
             <p class="page-intro">A clear view of your community, all in one place.</p>
           </div>
-          <button class="primary-button" type="button" (click)="startProtocolCreation()"><span aria-hidden="true">＋</span> Create protocol</button>
+          <button class="primary-button" type="button" (click)="startPersonCreation()"><svg class="inline-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg> Create Protocol &amp; Security</button>
         </section>
 
         <section class="stat-grid" aria-label="Platform overview">
           @for (stat of stats; track stat.label) {
             <article class="stat-card">
-              <div class="stat-card-top"><span>{{ stat.label }}</span><span class="stat-icon" [class]="stat.tone">{{ stat.icon }}</span></div>
+              <div class="stat-card-top"><span>{{ stat.label }}</span><span class="stat-icon" [class]="stat.tone">
+                @switch (stat.icon) {
+                  @case ('protocols') { <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h7l4 4v13H7a2 2 0 0 1-2-2v-13a2 2 0 0 1 2-2Z"></path><path d="M14 3.5v4h4M8.5 12h7M8.5 15.5h7"></path></svg> }
+                  @case ('users') { <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"></circle><path d="M3 20v-1a5 5 0 0 1 5-5h2a5 5 0 0 1 5 5v1m1-14a3 3 0 0 1 0 6m2 2a4 4 0 0 1 3 4v2"></path></svg> }
+                  @case ('confirmed') { <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"></circle><path d="m8 12 2.6 2.6L16.5 9"></path></svg> }
+                  @case ('regions') { <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 20.5h17M5 20V9l7-5 7 5v11M9 20v-6h6v6M8 10h.01M16 10h.01"></path></svg> }
+                }
+              </span></div>
               <div class="stat-value">{{ stat.value }}</div>
-              <div class="stat-foot"><span class="trend-mark">↗</span>{{ stat.change }}</div>
+              <div class="stat-foot"><svg class="trend-mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 17 17 5m-9 0h9v9"></path></svg>{{ stat.change }}</div>
             </article>
           }
         </section>
@@ -100,24 +140,24 @@
         <section class="dashboard-grid">
           <article class="panel protocols-panel">
             <div class="panel-heading">
-              <div><h2>Recent protocols</h2><p>The latest guidance shared with your community.</p></div>
-              <button class="text-button" type="button" (click)="selectSection('Protocols')">View all <span aria-hidden="true">→</span></button>
+              <div><h2>Protocol &amp; Security</h2><p>Members, officers and leaders serving across the community.</p></div>
+              <button class="text-button" type="button" (click)="selectSection('Protocols')">View all <svg class="inline-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"></path></svg></button>
             </div>
             <div class="protocol-list">
-              @for (protocol of protocols.slice(0, 3); track protocol.title) {
+              @for (person of overviewPeople; track person.id) {
                 <button class="protocol-row" type="button" (click)="selectSection('Protocols')">
-                  <span class="protocol-avatar" [class]="protocol.color">{{ protocol.initials }}</span>
+                  <span class="member-avatar" [class]="person.tone === 'gold' ? 'amber' : person.tone">{{ person.initials }}</span>
                   <span class="protocol-main">
-                    <strong>{{ protocol.title }}</strong>
-                    <small>{{ protocol.category }} <span>·</span> {{ protocol.scope }}</small>
+                    <strong>{{ person.name }}</strong>
+                    <small>{{ person.role }} <span>·</span> {{ accountTypeLabel(person) }}</small>
                   </span>
-                  <span class="protocol-date">{{ protocol.date }}</span>
-                  <span class="read-rate"><span class="mini-check">✓</span>{{ protocol.reads }}</span>
-                  <span class="row-arrow">↗</span>
+                  <span class="protocol-date">{{ person.region }} · {{ person.branch }}</span>
+                  <span class="status-pill" [class.review]="person.status !== 'Active'"><span></span>{{ person.status }}</span>
+                  <span class="row-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"></path></svg></span>
                 </button>
               }
             </div>
-            <div class="panel-footer"><span class="status-dot"></span> Protocols are up to date <span class="footer-link" (click)="selectSection('Reports & audit')">View reading report</span></div>
+            <div class="panel-footer"><span class="status-dot"></span> {{ peopleCount }} Protocol &amp; Security entries <span class="footer-link" (click)="selectSection('Protocols')">Open Protocol &amp; Security</span></div>
           </article>
 
           <article class="panel dress-panel">
@@ -125,7 +165,7 @@
               <div><h2>This week's dress code</h2><p>Shared guidance for every gathering.</p></div>
               <button class="more-button" type="button" aria-label="More options" (click)="selectSection('Dress code')">···</button>
             </div>
-            <div class="week-label"><span class="calendar-mark">▦</span> OCT 26 — NOV 1, 2026 <span class="week-current">THIS WEEK</span></div>
+            <div class="week-label"><svg class="calendar-mark" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="16" rx="2"></rect><path d="M7.5 3v4M16.5 3v4M3.5 10h17M8 14h2m4 0h2m-8 3h2"></path></svg> OCT 26 — NOV 1, 2026 <span class="week-current">THIS WEEK</span></div>
             <div class="dress-list">
               @for (item of dressCodes; track item.day) {
                 <div class="dress-row">
@@ -135,26 +175,28 @@
                 </div>
               }
             </div>
-            <button class="dress-link" type="button" (click)="selectSection('Dress code')">Open dress code calendar <span>→</span></button>
+            <button class="dress-link" type="button" (click)="selectSection('Dress code')">Open dress code calendar <svg class="inline-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"></path></svg></button>
           </article>
 
           <article class="panel activity-panel">
             <div class="panel-heading">
               <div><h2>Community activity</h2><p>Recent moments across your workspace.</p></div>
-              <button class="text-button" type="button" (click)="selectSection('Reports & audit')">View activity <span aria-hidden="true">→</span></button>
+              <button class="text-button" type="button" (click)="selectSection('Reports & audit')">View activity <svg class="inline-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"></path></svg></button>
             </div>
             <div class="activity-list">
-              @for (event of activity; track event.person + event.time) {
+              @for (event of activity; track event.id) {
                 <div class="activity-row">
                   <span class="activity-avatar" [class]="event.color">{{ event.initials }}</span>
                   <p><strong>{{ event.person }}</strong> {{ event.action }} <b>{{ event.subject }}</b><small>{{ event.time }}</small></p>
                 </div>
+              } @empty {
+                <p class="activity-empty">No recent recorded activity in your assigned area.</p>
               }
             </div>
           </article>
 
           <article class="reach-card">
-            <div class="reach-top"><span class="reach-icon">✧</span><span class="reach-period">THIS MONTH <span>⌄</span></span></div>
+            <div class="reach-top"><span class="reach-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"></circle><path d="M3.8 12h16.4M12 3.5c2.2 2.3 3.3 5.1 3.3 8.5s-1.1 6.2-3.3 8.5c-2.2-2.3-3.3-5.1-3.3-8.5s1.1-6.2 3.3-8.5Z"></path></svg></span><span class="reach-period">THIS MONTH <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"></path></svg></span></div>
             <p>Your community is<br><strong>staying connected.</strong></p>
             <div class="reach-number">1,104 <span>members reached</span></div>
             <div class="reach-meter"><span></span></div>
@@ -163,81 +205,100 @@
           </article>
         </section>
 
-        <footer class="page-footer"><span>© 2026 The Goodnews World</span><span>Built for a connected community <span class="footer-heart">✦</span></span><a href="#" (click)="$event.preventDefault(); selectSection('Settings')">Privacy &amp; security</a></footer>
+        <footer class="page-footer"><span>© {{ systemYear }} The Goodnews World</span><span>{{ systemDateLabel }}</span><span>Built for a connected community <span class="footer-heart">✦</span></span><a href="#" (click)="$event.preventDefault(); selectSection('Settings')">Privacy &amp; security</a></footer>
       } @else {
+        @if (activeSection !== 'Admin chat') {
         <section class="section-header">
           <div>
             <div class="eyebrow"><span class="eyebrow-line"></span> THE GOODNEWS WORLD</div>
             <h1>{{ sectionTitle }}</h1>
             <p class="page-intro">{{ sectionDescription }}</p>
           </div>
-          @if (activeSection !== 'Settings') {
-            <button class="primary-button" type="button" [disabled]="activeSection !== 'Protocols'" (click)="startProtocolCreation()">
+          @if (activeSection !== 'Settings' && activeSection !== 'Help messages' && activeSection !== 'A Note for Our Community') {
+            <button class="primary-button" type="button" [disabled]="activeSection !== 'Protocols'" (click)="startPersonCreation()">
               @if (activeSection === 'Protocols') {
-                <span aria-hidden="true">＋</span> New Protocol
+                <svg class="inline-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg> Create Protocol &amp; Security
               } @else if (activeSection === 'Dress code') {
-                <span aria-hidden="true">＋</span> New dress code
+                <svg class="inline-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg> New dress code
               } @else if (activeSection === 'Media library') {
-                <span aria-hidden="true">＋</span> Upload content
-              } @else if (activeSection === 'Users') {
-                <span aria-hidden="true">＋</span> Invite member
+                <svg class="inline-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg> Upload content
+              } @else if (activeSection === 'Admins') {
+                <svg class="inline-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg> Invite member
               } @else if (activeSection === 'Regions & branches') {
-                <span aria-hidden="true">＋</span> Add region
+                <svg class="inline-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg> Add region
               } @else {
                 Export report
               }
             </button>
           }
         </section>
+        }
 
-        @if (activeSection === 'Protocols' || activeSection === 'Media library' || activeSection === 'Users') {
+        @if (activeSection === 'Protocols' || activeSection === 'Media library' || activeSection === 'Admins') {
           <section class="panel module-panel">
             <div class="module-toolbar">
-              @if (activeSection !== 'Users') {
+              @if (activeSection !== 'Admins') {
                 <div class="scope-tabs" aria-label="Filter by scope">
-                  @for (scope of ['All scopes', 'Global', 'Regional', 'Local']; track scope) {
+                  @for (scope of activeSection === 'Protocols' ? ['All', 'Global', 'Regional', 'Local'] : ['All scopes', 'Global', 'Regional', 'Local']; track scope) {
                     <button type="button" [class.selected]="activeScope === scope" (click)="setScope(scope)">{{ scope }}</button>
                   }
                 </div>
               } @else {
-                <div class="user-summary"><span><strong>1,284</strong> total members</span><span><i class="status-dot"></i> 1,196 active</span><span>12 pending invitations</span></div>
+                <div class="user-summary"><span><strong>{{ filteredUsers.length }}</strong> Admin accounts</span><span><i class="status-dot"></i> {{ activeAdminCount }} active</span><span>{{ blockedAdminCount }} blocked</span></div>
               }
-              <label class="table-search"><span aria-hidden="true">⌕</span><input type="search" placeholder="Search {{ activeSection.toLowerCase() }}..." [value]="searchQuery" (input)="searchQuery = $any($event.target).value"></label>
+              <label class="table-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 4.5 4.5"></path></svg><input type="search" [placeholder]="activeSection === 'Protocols' ? 'Search Protocol & Security...' : 'Search ' + activeSection.toLowerCase() + '...'" [value]="searchQuery" (input)="searchQuery = $any($event.target).value"></label>
             </div>
             @if (activeSection === 'Protocols') {
-            <div class="table-wrap">
-              <table>
-                <thead><tr><th>PROTOCOL</th><th>SCOPE</th><th>LAST UPDATED</th><th>READ CONFIRMATION</th><th>STATUS</th><th></th></tr></thead>
-                <tbody>
-                  @for (protocol of filteredProtocols; track protocol.title) {
-                    <tr>
-                      <td><div class="table-title"><span class="protocol-avatar small" [class]="protocol.color">{{ protocol.initials }}</span><span><strong>{{ protocol.title }}</strong><small>{{ protocol.category }}</small></span></div></td>
-                      <td><span class="scope-pill neutral">{{ protocol.scope }}</span></td>
-                      <td>{{ protocol.date }}</td>
-                      <td><span class="read-cell"><span class="read-track"><i [style.width]="protocol.reads"></i></span>{{ protocol.reads }}</span></td>
-                      <td><span class="status-pill" [class.review]="protocol.status === 'Needs review'"><span></span>{{ protocol.status }}</span></td>
-                      <td><button class="row-menu" type="button" aria-label="Open protocol">···</button></td>
-                    </tr>
+                @if (accountActionError) { <p class="form-error" role="alert">{{ accountActionError }}</p> }
+                @if (personCreationNotice) { <p class="form-notice form-success" role="status">{{ personCreationNotice }}</p> }
+                <section class="admin-people-list">
+                <div class="panel-heading">
+                  <div><h2>Protocol &amp; Security</h2><p>{{ filteredPeople.length }} entries · {{ activeScope }} scope</p></div>
+                </div>
+                <div class="admin-people-grid">
+                  @for (person of filteredPeople; track person.id) {
+                    <article class="admin-person-card panel">
+                      <div class="admin-person-heading">
+                        <div class="table-title"><span class="member-avatar" [class]="person.tone === 'gold' ? 'amber' : person.tone">{{ person.initials }}</span><span><strong>{{ person.name }}</strong><small>{{ person.role }} · {{ accountTypeLabel(person) }}</small><small>{{ person.email }}</small></span></div>
+                        <span class="scope-pill neutral">{{ person.scope }}</span>
+                      </div>
+                      <div class="admin-person-meta"><small>{{ person.region }} · {{ person.branch }}</small><span class="status-pill" [class.review]="person.status !== 'Active'"><span></span>{{ person.status }}</span></div>
+                      <div class="scope-tabs">
+                        @if (canManagePerson(person)) {
+                          <button type="button" [class.selected]="person.status === 'Blocked'" (click)="togglePersonBlocked(person)">{{ person.status === 'Blocked' ? 'Unblock' : 'Block' }}</button>
+                          <button type="button" (click)="removePerson(person)">Remove</button>
+                        } @else { <span class="action-restricted">Restricted by hierarchy</span> }
+                      </div>
+                    </article>
                   } @empty {
-                    <tr><td class="empty-state" colspan="6">No protocols match your search.</td></tr>
+                    <div class="module-empty">
+                      <span class="empty-icon">✳</span>
+                      <h2>No Protocol &amp; Security entries match your filters</h2>
+                      <p>Try another scope or search term.</p>
+                    </div>
                   }
-                </tbody>
-              </table>
-            </div>
-            } @else if (activeSection === 'Users') {
+                </div>
+              </section>
+            } @else if (activeSection === 'Admins') {
+              @if (accountActionError) { <p class="form-error" role="alert">{{ accountActionError }}</p> }
               <div class="table-wrap">
                 <table class="users-table">
-                  <thead><tr><th>MEMBER</th><th>ROLE</th><th>REGION / BRANCH</th><th>LAST ACTIVE</th><th>STATUS</th><th></th></tr></thead>
+                  <thead><tr><th>ADMIN</th><th>ACCOUNT TYPE</th><th>COUNTRY / CITY</th><th>STATUS</th><th>ACTIONS</th></tr></thead>
                   <tbody>
-                    @for (user of filteredUsers; track user.email) {
+                    @for (user of filteredUsers; track user.id) {
                       <tr>
-                        <td><div class="table-title"><span class="member-avatar" [class]="user.tone">{{ user.initials }}</span><span><strong>{{ user.name }}</strong><small>{{ user.email }}</small></span></div></td>
-                        <td>{{ user.role }}</td><td>{{ user.location }}</td><td>{{ user.lastActive }}</td>
-                        <td><span class="status-pill" [class.review]="user.status !== 'Active'"><span></span>{{ user.status }}</span></td>
-                        <td><button class="row-menu" type="button" [attr.aria-label]="'Actions for ' + user.name">···</button></td>
+                        <td><div class="table-title"><span class="member-avatar" [class]="user.tone === 'gold' ? 'amber' : user.tone">{{ user.initials }}</span><span><strong>{{ user.name }}</strong><small>{{ user.email }}</small></span></div></td>
+                        <td>{{ accountTypeLabel(user) }}</td><td>{{ user.country || user.region }} · {{ user.city || user.branch }}</td>
+                        <td><span class="status-pill" [class.review]="user.status !== 'Active'" [class.blocked]="user.status === 'Blocked'"><span></span>{{ user.status }}</span></td>
+                        <td><div class="admin-actions scope-tabs">
+                          @if (canManagePerson(user)) {
+                            <button type="button" [class.selected]="user.status === 'Blocked'" (click)="togglePersonBlocked(user)">{{ user.status === 'Blocked' ? 'Unblock' : 'Block' }}</button>
+                            <button type="button" (click)="removePerson(user)">Remove</button>
+                          } @else { <span class="action-restricted">Restricted by hierarchy</span> }
+                        </div></td>
                       </tr>
                     } @empty {
-                      <tr><td class="empty-state" colspan="6">No members match your search.</td></tr>
+                      <tr><td class="empty-state" colspan="5">No Admin accounts match your search.</td></tr>
                     }
                   </tbody>
                 </table>
@@ -247,7 +308,13 @@
                 @for (item of filteredMediaItems; track item.title) {
                   <article class="media-card">
                     <div class="media-art" [class]="item.tone">
-                      <span class="media-art-mark">{{ item.icon }}</span>
+                      <span class="media-art-mark">
+                        @switch (item.icon) {
+                          @case ('video') { <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="13" height="14" rx="2"></rect><path d="m16 10 5-3v10l-5-3z"></path><path d="m8 9 4 3-4 3z"></path></svg> }
+                          @case ('document') { <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.5h8l4 4v13H6a2 2 0 0 1-2-2v-13a2 2 0 0 1 2-2Z"></path><path d="M14 3.5v4h4M8 12h7m-7 3h7"></path></svg> }
+                          @case ('image') { <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4" width="17" height="16" rx="2"></rect><circle cx="8.5" cy="9" r="1.5"></circle><path d="m4.5 17 5-5 3.3 3.2 2.2-2.1 4.5 4.4"></path></svg> }
+                        }
+                      </span>
                       <span class="media-art-brand">THE GOODNEWS WORLD</span>
                       @if (item.type === 'Video') { <span class="media-duration">{{ item.format.split('·')[1] }}</span> }
                     </div>
@@ -264,9 +331,9 @@
             }
             <div class="module-footer">
               @if (activeSection === 'Protocols') {
-                <span>Showing {{ filteredProtocols.length }} protocol{{ filteredProtocols.length === 1 ? '' : 's' }}</span>
-              } @else if (activeSection === 'Users') {
-                <span>Showing {{ filteredUsers.length }} members</span>
+                <span>Showing {{ filteredPeople.length }} Protocol &amp; Security entries</span>
+              } @else if (activeSection === 'Admins') {
+                <span>Showing {{ filteredUsers.length }} Admin accounts</span>
               } @else {
                 <span>Showing {{ filteredMediaItems.length }} items</span>
               }
@@ -276,11 +343,11 @@
         } @else if (activeSection === 'Dress code') {
           <section class="dress-page">
             <div class="dress-week-toolbar panel">
-              <div><span class="calendar-mark">▦</span><strong>Weekly schedule</strong><small>Dress guidance for every gathering</small></div>
+              <div><svg class="calendar-mark" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="16" rx="2"></rect><path d="M7.5 3v4M16.5 3v4M3.5 10h17M8 14h2m4 0h2m-8 3h2"></path></svg><strong>Weekly schedule</strong><small>Dress guidance for every gathering</small></div>
               <div class="week-controls">
-                <button type="button" aria-label="Previous week" (click)="changeWeek(-1)">‹</button>
+                <button type="button" aria-label="Previous week" (click)="changeWeek(-1)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></button>
                 <span>{{ weekLabel }}</span>
-                <button type="button" aria-label="Next week" (click)="changeWeek(1)">›</button>
+                <button type="button" aria-label="Next week" (click)="changeWeek(1)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></button>
                 <button class="today-button" type="button" (click)="selectedWeek = 0">Today</button>
               </div>
             </div>
@@ -288,7 +355,7 @@
               @for (item of dressCodes; track item.day) {
                 <article class="dress-detail-card panel">
                   <div class="dress-art" [class]="item.image">
-                    <span class="dress-art-sun">✳</span>
+                    <span class="dress-art-sun"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v3m0 14v3M4.93 4.93l2.12 2.12m9.9 9.9 2.12 2.12M2 12h3m14 0h3M4.93 19.07l2.12-2.12m9.9-9.9 2.12-2.12"></path></svg></span>
                     <span class="dress-art-caption">THE GOODNEWS WORLD</span>
                     <span class="dress-art-day">{{ item.day }}</span>
                   </div>
@@ -297,133 +364,269 @@
                     <h2>{{ item.title }}</h2>
                     <p>{{ item.detail }}</p>
                     <div class="dress-detail-meta"><span>Dress style</span><strong>{{ item.attire }}</strong></div>
-                    <button class="dress-edit-button" type="button">View dress code <span>→</span></button>
+                    <button class="dress-edit-button" type="button">View dress code <svg class="inline-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"></path></svg></button>
                   </div>
                 </article>
               }
             </div>
-            <div class="dress-note"><span>✦</span><p><strong>One community, one standard.</strong> Members see guidance for their branch alongside regional and global dress codes.</p></div>
+            <div class="dress-note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 14.5 9.5 21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5L12 3.5Z"></path></svg><p><strong>One community, one standard.</strong> Members see guidance for their branch alongside regional and global dress codes.</p></div>
           </section>
         } @else if (activeSection === 'Regions & branches') {
           <section class="regions-page">
             <div class="region-summary-row">
-              <div class="summary-tile panel"><span>Regions</span><strong>12</strong><small>Across 8 countries</small></div>
-              <div class="summary-tile panel"><span>Branches</span><strong>72</strong><small>Connected communities</small></div>
-              <div class="summary-tile panel"><span>Members</span><strong>12,480</strong><small>Across all regions</small></div>
+              <div class="summary-tile panel"><span>Countries / regions</span><strong>{{ regions.length }}</strong><small>Within your administration scope</small></div>
+              <div class="summary-tile panel"><span>Cities / branches</span><strong>{{ branchCount }}</strong><small>Locations assigned to accounts</small></div>
+              <div class="summary-tile panel"><span>Members</span><strong>{{ locationMemberCount }}</strong><small>Registered in your scope</small></div>
             </div>
-            <div class="regions-heading"><div><h2>Regions</h2><p>Regional administrators and their branches.</p></div><label class="table-search"><span>⌕</span><input placeholder="Search regions..." [value]="searchQuery" (input)="searchQuery = $any($event.target).value"></label></div>
+            <div class="regions-heading"><div><h2>Regions &amp; branches</h2><p>Countries, cities and assigned administrators based on directory accounts.</p></div><label class="table-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 4.5 4.5"></path></svg><input placeholder="Search country, city or admin..." [value]="searchQuery" (input)="searchQuery = $any($event.target).value"></label></div>
             <div class="region-grid">
               @for (region of filteredRegions; track region.code) {
                 <article class="region-card panel">
-                  <div class="region-card-top"><span class="region-mark">{{ region.code }}</span><span class="status-pill"><span></span>{{ region.status }}</span></div>
-                  <h3>{{ region.name }}</h3><p>{{ region.country }}</p>
-                  <div class="region-lead"><span class="member-avatar sage">{{ initialsFor(region.lead) }}</span><span><small>REGIONAL ADMINISTRATOR</small><strong>{{ region.lead }}</strong></span></div>
-                  <div class="region-card-stats"><span><strong>{{ region.branches }}</strong><small>Branches</small></span><span><strong>{{ region.members }}</strong><small>Members</small></span></div>
-                  <button class="dress-edit-button" type="button">View branches <span>→</span></button>
+                  <div class="region-card-top"><span class="region-mark">{{ region.code }}</span><span class="status-pill" [class.review]="!region.regionalAdmin"><span></span>{{ region.regionalAdmin ? 'Regional Admin assigned' : 'Admin needed' }}</span></div>
+                  <h3>{{ region.country }}</h3><p>Country · {{ region.branchCount }} branches across {{ region.branches.length }} cities</p>
+                  <div class="region-lead">
+                    @if (region.regionalAdmin; as admin) {
+                      <span class="member-avatar sage">{{ admin.initials }}</span><span><small>REGIONAL ADMINISTRATOR</small><strong>{{ admin.name }}</strong></span>
+                    } @else {
+                      <span class="member-avatar amber">!</span><span><small>REGIONAL ADMINISTRATOR</small><strong>Not assigned</strong></span>
+                    }
+                  </div>
+                  <div class="region-card-stats"><span><strong>{{ region.branchCount }}</strong><small>Branches</small></span><span><strong>{{ region.members }}</strong><small>Members</small></span></div>
+                  <div class="region-branch-list">
+                    <strong class="region-branch-heading">Branches by city</strong>
+                    @for (branch of region.branches; track branch.city) {
+                      <div class="region-branch-row">
+                        <span><strong>{{ branch.city }}</strong>
+                          @if (branch.branchNames.length) {
+                            <small>Branches: @for (branchName of branch.branchNames; track branchName) { {{ branchName }}@if (!$last) {, } }</small>
+                          }
+                          @if (branch.localAdmins.length) {
+                            <small>@for (admin of branch.localAdmins; track admin.id) { {{ admin.name }}@if (!$last) {, } }</small>
+                          } @else {
+                            <small>No Local Admin assigned</small>
+                          }
+                        </span>
+                        <small>{{ branch.members }} members</small>
+                      </div>
+                    } @empty {
+                      <p class="region-no-branches">No city or branch locations assigned yet.</p>
+                    }
+                  </div>
                 </article>
               } @empty {
-                <p class="media-empty">No regions match your search.</p>
+                <p class="media-empty">{{ regions.length ? 'No regions match your search.' : 'No countries or branches are available in your administration scope yet.' }}</p>
               }
             </div>
           </section>
         } @else if (activeSection === 'Reports & audit') {
           <section class="reports-page">
             <div class="reports-toolbar panel">
-              <div><strong>Activity overview</strong><small>Access, reading and administrative actions.</small></div>
+              <div><strong>Account activity</strong><small>Member and Admin sign-ins, sign-outs and account changes recorded in this browser.</small></div>
               <select [value]="reportRange" (change)="setReportRange($any($event.target).value)"><option>Last 7 days</option><option>Last 30 days</option><option>This year</option></select>
             </div>
             <div class="report-stats">
-              <article class="report-stat panel"><span>Successful sign-ins</span><strong>2,486</strong><small>↗ 8.4% from previous period</small></article>
-              <article class="report-stat panel"><span>Protocol confirmations</span><strong>1,104</strong><small>86% member completion rate</small></article>
-              <article class="report-stat panel"><span>Admin actions</span><strong>348</strong><small>Across 12 active regions</small></article>
-              <article class="report-stat panel"><span>Blocked attempts</span><strong>3</strong><small>All reviewed by administrators</small></article>
+              <article class="report-stat panel"><span>Member &amp; Admin sign-ins</span><strong>{{ auditSummary.signIns }}</strong><small>Opened in selected period and scope</small></article>
+              <article class="report-stat panel"><span>Member &amp; Admin sign-outs</span><strong>{{ auditSummary.signOuts }}</strong><small>Closed in selected period and scope</small></article>
+              <article class="report-stat panel"><span>Account changes</span><strong>{{ auditSummary.accountChanges }}</strong><small>Created, blocked, unblocked or removed</small></article>
+              <article class="report-stat panel"><span>Denied sign-ins</span><strong>{{ auditSummary.blockedSignIns }}</strong><small>Blocked or removed account attempts</small></article>
             </div>
             <div class="audit-panel panel">
-              <div class="audit-heading"><div><h2>Recent audit activity</h2><p>A traceable record of important platform events.</p></div><label class="table-search"><span>⌕</span><input placeholder="Filter activity..." [value]="searchQuery" (input)="searchQuery = $any($event.target).value"></label></div>
+              <div class="audit-heading"><div><h2>Activity history</h2><p>Visible according to your admin level and assigned location.</p></div><label class="table-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 4.5 4.5"></path></svg><input placeholder="Filter activity..." [value]="searchQuery" (input)="searchQuery = $any($event.target).value"></label></div>
               <div class="table-wrap"><table class="audit-table"><thead><tr><th>ACTOR</th><th>ACTION</th><th>MODULE</th><th>SCOPE</th><th>DATE &amp; TIME</th><th>RESULT</th></tr></thead>
-                <tbody>@for (event of filteredAuditEvents; track event.user + event.time) {
-                  <tr><td><div class="table-title"><span class="member-avatar sage">{{ event.initials }}</span><span><strong>{{ event.user }}</strong><small>{{ event.item }}</small></span></div></td><td>{{ event.action }}</td><td>{{ event.module }}</td><td><span class="scope-pill neutral">{{ event.scope }}</span></td><td>{{ event.time }}</td><td><span class="status-pill" [class.review]="event.outcome === 'Blocked'"><span></span>{{ event.outcome }}</span></td></tr>
-                } @empty { <tr><td colspan="6" class="empty-state">No activity matches your search.</td></tr> }</tbody>
+                <tbody>@for (event of filteredAuditEvents; track event.id) {
+                  <tr><td><div class="table-title"><span class="member-avatar sage">{{ initialsFor(event.actorName) }}</span><span><strong>{{ event.actorName }}</strong><small>{{ event.actorRole }} · {{ event.target }}</small></span></div></td><td>{{ event.action }}</td><td>{{ event.module }}</td><td><span class="scope-pill neutral">{{ event.scope }}</span></td><td>{{ event.time }}</td><td><span class="status-pill" [class.review]="event.outcome === 'Blocked'"><span></span>{{ event.outcome }}</span></td></tr>
+                } @empty { <tr><td colspan="6" class="empty-state">No recorded activity in this period matches your scope or search.</td></tr> }</tbody>
               </table></div>
-              <div class="module-footer"><span>Showing {{ filteredAuditEvents.length }} recent events</span><span>Audit records are retained for compliance review.</span></div>
+              <div class="module-footer"><span>Showing {{ filteredAuditEvents.length }} recorded events</span><span>History is stored in this browser only.</span></div>
             </div>
           </section>
+        } @else if (activeSection === 'Admin chat') {
+          <app-admin-chat-panel />
+        } @else if (activeSection === 'Help messages') {
+          <app-admin-help-panel />
+        } @else if (activeSection === 'A Note for Our Community') {
+          @if (adminSession.adminLevel === 'global-admin') {
+            <section class="community-note-admin">
+              <article class="settings-card panel">
+                <div class="settings-card-heading">
+                  <div><h2>Global community note</h2><p>This message is intended for every member, worldwide.</p></div>
+                  <span class="scope-pill neutral">GLOBAL</span>
+                </div>
+                <label class="form-field"><span>Title</span><input maxlength="120" [value]="communityNoteTitle" (input)="communityNoteTitle = $any($event.target).value"></label>
+                <label class="form-field"><span>Message</span><textarea rows="5" maxlength="1200" [value]="communityNoteMessage" (input)="communityNoteMessage = $any($event.target).value"></textarea></label>
+                <div class="community-note-media-fields">
+                  <label class="form-field"><span>Media type</span><select [value]="communityNoteMediaType" (change)="communityNoteMediaType = $any($event.target).value"><option value="none">No media</option><option value="image">Image</option><option value="video">Video</option></select></label>
+                  @if (communityNoteMediaType !== 'none') {
+                    <label class="form-field"><span>{{ communityNoteMediaType === 'image' ? 'Image URL' : 'Video URL' }}</span><input type="url" [value]="communityNoteMediaUrl" (input)="communityNoteMediaUrl = $any($event.target).value" placeholder="https://..."></label>
+                  }
+                </div>
+                @if (communityNoteError) { <p class="form-error" role="alert">{{ communityNoteError }}</p> }
+                @if (communityNoteNotice) { <p class="form-notice form-success" role="status">{{ communityNoteNotice }}</p> }
+                <p class="community-note-status">{{ communityNotePublished ? 'Published in this browser' : 'Draft saved in this browser' }}@if (communityNotePublished) { · {{ communityNotePublishedLabel }} }</p>
+                <div class="community-note-actions">
+                  <button class="primary-button" type="button" (click)="saveCommunityNote(true)">Publish note</button>
+                  @if (communityNotePublished) { <button class="secondary-button" type="button" (click)="saveCommunityNote(false)">Unpublish</button> }
+                </div>
+              </article>
+              <p class="community-note-api-hint">The saved note is available in this browser. Publishing it to members on other devices requires the platform API.</p>
+            </section>
+          }
         } @else {
           <section class="settings-page">
-            <aside class="settings-nav panel"><strong>Workspace settings</strong><a class="selected" href="#general">General</a><a href="#security">Security &amp; access</a><a href="#notifications">Notifications</a><a href="#language">Language &amp; region</a></aside>
+            <aside class="settings-nav panel">
+              <strong>Workspace settings</strong>
+              <button type="button" [class.selected]="activeSettingsTab === 'general'" (click)="selectSettingsTab('general')">General</button>
+              <button type="button" [class.selected]="activeSettingsTab === 'security'" (click)="selectSettingsTab('security')">Security &amp; access</button>
+              <button type="button" [class.selected]="activeSettingsTab === 'notifications'" (click)="selectSettingsTab('notifications')">Notifications</button>
+              <button type="button" [class.selected]="activeSettingsTab === 'language'" (click)="selectSettingsTab('language')">Language &amp; region</button>
+            </aside>
             <div class="settings-content">
               <article id="general" class="settings-card panel">
-                <div class="settings-card-heading"><div><h2>Workspace identity</h2><p>How your organisation appears across the platform.</p></div><span class="settings-symbol">✦</span></div>
-                <label class="form-field"><span>Organisation name</span><input [value]="workspaceName" (input)="workspaceName = $any($event.target).value"></label>
-                <label class="form-field"><span>Department</span><input [value]="departmentName" (input)="departmentName = $any($event.target).value"></label>
-                <label class="form-field"><span>Default content visibility</span><select [value]="defaultScope" (change)="defaultScope = $any($event.target).value"><option>Global</option><option>Regional</option><option>Local</option></select></label>
+                <div class="settings-card-heading"><div><h2>Workspace identity</h2><p>How your organisation appears across the platform.</p></div><span class="settings-symbol"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 20.5h17M5 20V9l7-5 7 5v11M9 20v-6h6v6M8 10h.01M16 10h.01"></path></svg></span></div>
+                <label class="form-field"><span>Organisation name</span><input maxlength="100" [value]="workspaceName" (input)="workspaceName = $any($event.target).value; markSettingsChanged()"></label>
+                <label class="form-field"><span>Department</span><input maxlength="100" [value]="departmentName" (input)="departmentName = $any($event.target).value; markSettingsChanged()"></label>
+                <label class="form-field"><span>Default content visibility</span><select [value]="defaultScope" (change)="defaultScope = $any($event.target).value; markSettingsChanged()"><option>Global</option><option>Regional</option><option>Local</option></select></label>
               </article>
               <article id="security" class="settings-card panel">
-                <div class="settings-card-heading"><div><h2>Security &amp; access</h2><p>Keep member accounts secure and accountable.</p></div><span class="settings-symbol">⌑</span></div>
-                <div class="setting-option"><span><strong>Require password change on first sign-in</strong><small>New members must set a personal password before using the portal.</small></span><button class="toggle-switch" [class.on]="securityPreferences.forcePasswordChange" role="switch" [attr.aria-checked]="securityPreferences.forcePasswordChange" aria-label="Require password change on first sign-in" (click)="toggleSecurityPreference('forcePasswordChange')"></button></div>
-                <div class="setting-option"><span><strong>Record access and administrative activity</strong><small>Keep an audit trail for account, protocol and content changes.</small></span><button class="toggle-switch" [class.on]="securityPreferences.auditLogging" role="switch" [attr.aria-checked]="securityPreferences.auditLogging" aria-label="Record access and administrative activity" (click)="toggleSecurityPreference('auditLogging')"></button></div>
-                <div class="setting-option"><span><strong>Member self-registration</strong><small>Accounts are created by an administrator, not through public sign-up.</small></span><button class="toggle-switch" [class.on]="securityPreferences.allowSelfRegistration" role="switch" [attr.aria-checked]="securityPreferences.allowSelfRegistration" aria-label="Member self-registration" (click)="toggleSecurityPreference('allowSelfRegistration')"></button></div>
+                <div class="settings-card-heading"><div><h2>Security &amp; access</h2><p>Configure account and access preferences.</p></div><span class="settings-symbol"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 19 6v5c0 4.5-2.8 7.8-7 10-4.2-2.2-7-5.5-7-10V6l7-3Z"></path><path d="m9 12 2 2 4-4"></path></svg></span></div>
+                <div class="setting-option"><span><strong>Require password change on first sign-in</strong><small>Preference for new account onboarding.</small></span><button class="toggle-switch" [class.on]="securityPreferences.forcePasswordChange" role="switch" [attr.aria-checked]="securityPreferences.forcePasswordChange" aria-label="Require password change on first sign-in" (click)="toggleSecurityPreference('forcePasswordChange')"></button></div>
+                <div class="setting-option"><span><strong>Record access and administrative activity</strong><small>Store sign-ins, sign-outs and account changes in the local audit history.</small></span><button class="toggle-switch" [class.on]="securityPreferences.auditLogging" role="switch" [attr.aria-checked]="securityPreferences.auditLogging" aria-label="Record access and administrative activity" (click)="toggleSecurityPreference('auditLogging')"></button></div>
+                <div class="setting-option"><span><strong>Member self-registration</strong><small>Allow people to create an account without an administrator invitation.</small></span><button class="toggle-switch" [class.on]="securityPreferences.allowSelfRegistration" role="switch" [attr.aria-checked]="securityPreferences.allowSelfRegistration" aria-label="Member self-registration" (click)="toggleSecurityPreference('allowSelfRegistration')"></button></div>
+                <p class="settings-local-note">These preferences are saved in this browser. Enforcing account policies across users requires a connected authentication service.</p>
               </article>
               <article id="language" class="settings-card panel">
                 <div class="settings-card-heading"><div><h2>Language &amp; region</h2><p>Configure the initial platform experience.</p></div></div>
-                <div class="language-setting"><span><strong>Platform language</strong><small>More languages can be introduced progressively.</small></span><span class="language-value">English <span>⌄</span></span></div>
-                <button class="primary-button save-settings" type="button" (click)="saveSettings()">{{ settingsSaved ? '✓ Settings saved' : 'Save changes' }}</button>
+                <label class="language-setting"><span><strong>Platform language</strong><small>English is currently the only available interface language.</small></span><select class="language-select" [value]="platformLanguage" disabled>@for (language of platformLanguages; track language) { <option [value]="language">{{ language }}</option> }</select></label>
               </article>
               <article id="notifications" class="settings-card panel">
-                <div class="settings-card-heading"><div><h2>Notifications</h2><p>Keep administrators informed about important community activity.</p></div><span class="settings-symbol">♧</span></div>
-                <div class="setting-option"><span><strong>Protocol reading reminders</strong><small>Notify members when an important protocol needs acknowledgement.</small></span><span class="toggle-switch on"></span></div>
-                <div class="setting-option"><span><strong>Security and account alerts</strong><small>Highlight sign-in issues, invitations and account changes.</small></span><span class="toggle-switch on"></span></div>
+                <div class="settings-card-heading"><div><h2>Notifications</h2><p>Keep administrators informed about important community activity.</p></div><span class="settings-symbol"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path><path d="M10 21h4"></path></svg></span></div>
+                <div class="setting-option"><span><strong>Protocol reading reminders</strong><small>Preference for reminders about protocol acknowledgements.</small></span><button class="toggle-switch" [class.on]="protocolReadingReminders" role="switch" [attr.aria-checked]="protocolReadingReminders" aria-label="Protocol reading reminders" (click)="toggleNotificationPreference('protocolReadingReminders')"></button></div>
+                <div class="setting-option"><span><strong>Security and account alerts</strong><small>Preference for sign-in, invitation and account alerts.</small></span><button class="toggle-switch" [class.on]="securityAccountAlerts" role="switch" [attr.aria-checked]="securityAccountAlerts" aria-label="Security and account alerts" (click)="toggleNotificationPreference('securityAccountAlerts')"></button></div>
               </article>
+              @if (settingsError) { <p class="settings-error" role="alert">{{ settingsError }}</p> }
+              @if (settingsSaved) { <p class="settings-saved" role="status">Settings saved in this browser.</p> }
+              <button class="primary-button save-settings" type="button" (click)="saveSettings()">Save changes</button>
             </div>
           </section>
         }
-        <footer class="page-footer"><span>© 2026 The Goodnews World</span><span>Built for a connected community <span class="footer-heart">✦</span></span><a href="#" (click)="$event.preventDefault(); selectSection('Settings')">Privacy &amp; security</a></footer>
+        <footer class="page-footer"><span>© {{ systemYear }} The Goodnews World</span><span>{{ systemDateLabel }}</span><span>Built for a connected community <span class="footer-heart">✦</span></span><a href="#" (click)="$event.preventDefault(); selectSection('Settings')">Privacy &amp; security</a></footer>
       }
     </div>
   </main>
 
-  @if (showProtocolModal) {
-    <div class="modal-backdrop" (click)="closeProtocolModal()">
-      <section class="protocol-modal" role="dialog" aria-modal="true" aria-labelledby="protocol-modal-title" (click)="$event.stopPropagation()">
+  @if (showHelpCenter) {
+    <app-admin-help-center (close)="closeHelpCenter()" (navigate)="selectSection($event)" />
+  }
+
+  @if (showProfileModal) {
+    <div class="modal-backdrop" (click)="closeProfile()">
+      <section class="protocol-modal admin-profile-modal" role="dialog" aria-modal="true" aria-labelledby="admin-profile-title" (click)="$event.stopPropagation()">
         <div class="modal-heading">
           <div>
-            <div class="eyebrow"><span class="eyebrow-line"></span> PROTOCOLS</div>
-            <h2 id="protocol-modal-title">Create a protocol</h2>
-            <p>Start a draft for your community. You can review it before publishing.</p>
+            <div class="eyebrow"><span class="eyebrow-line"></span> ADMIN ACCOUNT</div>
+            <h2 id="admin-profile-title">My profile</h2>
+            <p>Your current account and assigned location.</p>
           </div>
-          <button class="modal-close" type="button" aria-label="Close dialog" (click)="closeProtocolModal()">×</button>
+          <button class="modal-close" type="button" aria-label="Close profile" (click)="closeProfile()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"></path></svg></button>
         </div>
-        <form (submit)="$event.preventDefault(); createProtocol()">
+        <div class="form-row">
+          <div class="form-field"><span>Name</span><strong>{{ currentAdminName }}</strong></div>
+          <div class="form-field"><span>Email</span><strong>{{ adminSession.adminEmail }}</strong></div>
+          <div class="form-field"><span>Admin level</span><strong>{{ currentAdminRole }}</strong></div>
+          <div class="form-field"><span>Country</span><strong>{{ currentAdmin?.country || adminSession.adminCountry || 'Not assigned' }}</strong></div>
+          <div class="form-field"><span>City</span><strong>{{ currentAdmin?.city || adminSession.adminCity || 'Not assigned' }}</strong></div>
+        </div>
+        <div class="modal-footer"><span>Administrator profile</span><div><button class="cancel-button" type="button" (click)="closeProfile()">Close</button><button class="primary-button" type="button" (click)="signOut()">Log out</button></div></div>
+      </section>
+    </div>
+  }
+
+  @if (showPersonModal) {
+    <div class="modal-backdrop" (click)="closePersonModal()">
+      <section class="protocol-modal" role="dialog" aria-modal="true" aria-labelledby="person-modal-title" (click)="$event.stopPropagation()">
+        <div class="modal-heading">
+          <div>
+            <div class="eyebrow"><span class="eyebrow-line"></span> PROTOCOL &amp; SECURITY</div>
+            <h2 id="person-modal-title">Create Protocol &amp; Security</h2>
+            <p>Register a member, officer or leader.</p>
+          </div>
+          <button class="modal-close" type="button" aria-label="Close dialog" (click)="closePersonModal()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"></path></svg></button>
+        </div>
+        <form (submit)="$event.preventDefault(); createPerson()">
           <label class="form-field">
-            <span>Protocol title <i>*</i></span>
-            <input required maxlength="100" placeholder="e.g. Sunday service protocol" [value]="newProtocolTitle" (input)="newProtocolTitle = $any($event.target).value">
+            <span>Full name <i>*</i></span>
+            <input required maxlength="100" autocomplete="name" placeholder="Enter full name" [value]="newPersonName" (input)="newPersonName = $any($event.target).value">
           </label>
-          <div class="form-row">
+          <label class="form-field">
+            <span>Email <i>*</i></span>
+            <input required type="email" maxlength="254" autocomplete="email" placeholder="name@example.com" [value]="newPersonEmail" (input)="newPersonEmail = $any($event.target).value">
+          </label>
+          <label class="form-field">
+            <span>Title <i>*</i></span>
+            <select required [value]="newPersonTitle" (change)="newPersonTitle = $any($event.target).value">
+              <option value="Member">Member</option>
+              <option value="Officer">Officer</option>
+              <option value="Leader">Leader</option>
+            </select>
+          </label>
+          <label class="form-field">
+            <span>Account type <i>*</i></span>
+            <select required [value]="newAccountType" (change)="newAccountType = $any($event.target).value">
+              @for (accountType of assignableAccountTypes; track accountType.value) {
+                <option [value]="accountType.value">{{ accountType.label }}</option>
+              }
+            </select>
+          </label>
+          @if (adminSession.adminLevel === 'global-admin') {
             <label class="form-field">
-              <span>Category <i>*</i></span>
-              <input required maxlength="60" placeholder="e.g. Worship & service" [value]="newProtocolCategory" (input)="newProtocolCategory = $any($event.target).value">
-            </label>
-            <label class="form-field">
-              <span>Visibility scope</span>
-              <select [value]="newProtocolScope" (change)="newProtocolScope = $any($event.target).value">
-                <option>Global</option>
-                <option>Regional</option>
-                <option>Local</option>
+              <span>Country <i>*</i></span>
+              <select required [value]="newCountry" [disabled]="locationLoading && countries.length === 0" (change)="onCountryChanged($any($event.target).value)">
+                <option value="">{{ locationLoading && countries.length === 0 ? 'Loading countries...' : 'Select a country' }}</option>
+                @for (country of countries; track country) { <option [value]="country">{{ country }}</option> }
               </select>
             </label>
-          </div>
-          <label class="form-field">
-            <span>Guidance <small>Optional</small></span>
-            <textarea rows="4" placeholder="Add the guidance members should follow..." [value]="newProtocolContent" (input)="newProtocolContent = $any($event.target).value"></textarea>
-          </label>
+          } @else {
+            <label class="form-field">
+              <span>Country · inherited</span>
+              <input [value]="adminSession.adminCountry || 'No country assigned to this Admin'" disabled>
+            </label>
+          }
+          @if (adminSession.adminLevel !== 'local-admin') {
+            <label class="form-field">
+              <span>City <i>*</i></span>
+              <input required maxlength="100" autocomplete="address-level2" placeholder="Enter city or municipality" [value]="newCity" (input)="newCity = $any($event.target).value">
+            </label>
+          } @else {
+            <label class="form-field">
+              <span>City · inherited</span>
+              <input [value]="adminSession.adminCity || 'No city assigned to this Admin'" disabled>
+            </label>
+          }
+          @if (locationError) { <p class="form-error" role="alert">{{ locationError }}</p> }
+          <p class="form-notice">This is saved in this browser only. Account authentication and email delivery are not configured. Once a backend is connected, it can send a secure password setup link (not a password).</p>
+          @if (personCreationError) { <p class="form-error" role="alert">{{ personCreationError }}</p> }
           <div class="modal-footer">
-            <span><span class="draft-dot"></span> Saved as a draft</span>
+            <span><span class="draft-dot"></span> Protocol &amp; Security entry</span>
             <div>
-              <button class="cancel-button" type="button" (click)="closeProtocolModal()">Cancel</button>
-              <button class="primary-button" type="submit"><span aria-hidden="true">＋</span> Create draft</button>
+              <button class="cancel-button" type="button" (click)="closePersonModal()">Cancel</button>
+              <button class="primary-button" type="submit" [disabled]="!canCreateEntry"><svg class="inline-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg> Create</button>
             </div>
           </div>
         </form>
+      </section>
+    </div>
+  }
+  @if (personToRemove; as person) {
+    <div class="modal-backdrop remove-modal-backdrop" (click)="closeRemovePersonModal()">
+      <section class="remove-confirm-modal" role="alertdialog" aria-modal="true" aria-labelledby="remove-modal-title" aria-describedby="remove-modal-description" (click)="$event.stopPropagation()">
+        <span class="remove-confirm-icon" aria-hidden="true">!</span>
+        <p class="remove-confirm-eyebrow">IRREVERSIBLE ACTION</p>
+        <h2 id="remove-modal-title">Remove this account?</h2>
+        <p id="remove-modal-description"><strong>{{ person.name }}</strong> will be removed from Protocol &amp; Security. This action cannot be undone.</p>
+        <div class="remove-confirm-actions">
+          <button class="remove-cancel-button" type="button" (click)="closeRemovePersonModal()">Cancel</button>
+          <button class="remove-confirm-button" type="button" (click)="confirmRemovePerson()">Remove account</button>
+        </div>
       </section>
     </div>
   }

@@ -33,7 +33,7 @@ import { PortalSession } from '../portal-session';
               <img src="imagem/logo.png" alt="Spirit Embassy logo">
             }
           </span>
-          <div><h2>{{ session.memberName }}</h2><p>Member <i>·</i> Lagos Central Branch</p></div>
+          <div><h2>{{ session.memberName }}</h2><p>{{ session.accountRole }} <i>·</i> {{ session.accountLocation }}</p></div>
           <span class="active-badge"><i></i> ACTIVE</span>
         </div>
         <div class="profile-section">
@@ -71,7 +71,7 @@ import { PortalSession } from '../portal-session';
           <div class="community-info">
             <span class="community-mark">G</span>
             <span><strong>The Goodnews World</strong><small>Protocol &amp; Security Department</small></span>
-            <span class="community-location">Lagos Central <i>·</i> West Africa</span>
+            <span class="community-location">{{ session.accountLocation }}</span>
           </div>
         </div>
       </article>
@@ -81,8 +81,8 @@ import { PortalSession } from '../portal-session';
           <strong>One family,<br>many gatherings.</strong>
           <p>Your member account is connected to your local branch and regional community.</p>
           <div class="connection-line"><i></i><span>Global community<small>The Goodnews World</small></span></div>
-          <div class="connection-line"><i></i><span>Region<small>West Africa</small></span></div>
-          <div class="connection-line"><i></i><span>Your branch<small>Lagos Central</small></span></div>
+          <div class="connection-line"><i></i><span>Account type<small>{{ session.accountRole }}</small></span></div>
+          <div class="connection-line"><i></i><span>Your community<small>{{ session.accountLocation }}</small></span></div>
         </article>
         <button class="sign-out-button" type="button" (click)="session.signOut()">Sign out <span>↗</span></button>
         <p class="profile-help">Need to update your account access?<br>Contact your local administrator.</p>

@@ -11,11 +11,13 @@ import { MemberPeople } from './member-portal/member-people';
 import { MemberPortal } from './member-portal/member-portal';
 import { MemberProfile } from './member-portal/member-profile';
 import { PublicHome } from './public-home/public-home';
+import { PrivacySecurity } from './privacy-security';
 import { requireAdminPasswordChange, requireAdminSession } from './admin-session';
 import { requirePortalPasswordChange, requirePortalSession } from './portal-session';
 
 export const routes: Routes = [
   { path: '', component: PublicHome, title: 'Spirit Embassy | Protocol & Security' },
+  { path: 'privacy-security', component: PrivacySecurity, title: 'Privacy & security | Spirit Embassy' },
   { path: 'login', component: LoginPage, title: 'Member sign in | Spirit Embassy' },
   {
     path: 'first-login/member',

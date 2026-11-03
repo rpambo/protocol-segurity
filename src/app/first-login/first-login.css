@@ -18,8 +18,8 @@
   justify-content: space-between;
   min-height: 100vh;
   padding: 35px 9%;
-  color: #f5f0e2;
-  background: #191a14;
+  color: #303b33;
+  background: linear-gradient(135deg, #faf9f5e8, #faf9f5d9), url('/images/iconium-spirit-embassy-harare-login.jpg') center / cover no-repeat;
 }
 
 .brand {
@@ -50,7 +50,7 @@
 }
 
 .brand-copy small {
-  color: #bdb69c;
+  color: #73796e;
   font-size: 7px;
   letter-spacing: .24em;
 }
@@ -64,7 +64,7 @@
   display: flex;
   align-items: center;
   gap: 9px;
-  color: #c7b15e;
+  color: #927a35;
   font-size: 8px;
   letter-spacing: .2em;
 }
@@ -73,7 +73,7 @@
 .form-kicker span {
   width: 19px;
   height: 1px;
-  background: #c7b15e;
+  background: #a48b43;
 }
 
 .brand-message h1 {
@@ -83,13 +83,13 @@
 }
 
 .brand-message h1 em {
-  color: #d8c272;
+  color: #9a813c;
   font-weight: 400;
 }
 
 .brand-message p {
   max-width: 310px;
-  color: #b6b5a9;
+  color: #626b61;
   font-size: 11px;
   line-height: 1.8;
 }
@@ -99,13 +99,13 @@
   align-items: center;
   gap: 9px;
   padding-top: 14px;
-  border-top: 1px solid #ffffff2c;
-  color: #aead9f;
+  border-top: 1px solid #34423840;
+  color: #60695f;
   font-size: 9px;
 }
 
 .brand-footer span {
-  color: #d3bd70;
+  color: #9b8240;
   font-size: 16px;
 }
 
@@ -116,6 +116,7 @@
   justify-content: center;
   min-height: 100vh;
   padding: 65px 8% 85px;
+  background: #252621;
 }
 
 .first-login-card {
@@ -128,7 +129,7 @@
   align-items: center;
   gap: 10px;
   margin-bottom: 30px;
-  color: #b4b5ac;
+  color: #bfc0b6;
   font-size: 8px;
 }
 
@@ -137,40 +138,40 @@
   width: 25px;
   height: 25px;
   place-items: center;
-  border: 1px solid #e4e3db;
+  border: 1px solid #55564f;
   border-radius: 50%;
 }
 
 .step-indicator .step-current {
-  border-color: #b39a4e;
-  color: #786737;
-  background: #f3eedc;
+  border-color: #c7b15e;
+  color: #e7d48a;
+  background: #393729;
 }
 
 .step-indicator i {
   width: 30px;
   height: 1px;
-  background: #e4e3db;
+  background: #55564f;
 }
 
 .form-kicker {
-  color: #a28c4b;
+  color: #d7c475;
 }
 
 .form-kicker span {
-  background: #b39a4e;
+  background: #c7b15e;
 }
 
 .first-login-card h2 {
   margin: 15px 0 8px;
-  color: #31372f;
+  color: #f5f0e2;
   font: 400 36px Georgia, serif;
   letter-spacing: -.03em;
 }
 
 .form-intro {
   margin: 0 0 27px;
-  color: #858a80;
+  color: #c2c3b9;
   font-size: 10px;
   line-height: 1.7;
 }
@@ -180,7 +181,7 @@
   flex-direction: column;
   gap: 8px;
   margin-bottom: 18px;
-  color: #596258;
+  color: #e1e0d6;
   font-size: 9px;
   font-weight: 600;
 }
@@ -234,14 +235,14 @@
 }
 
 .field-hint {
-  color: #898d83;
+  color: #bfc0b6;
   font-size: 8px;
   font-weight: 400;
 }
 
 .form-message {
   margin: -3px 0 13px;
-  color: #9d5944;
+  color: #f2a58e;
   font-size: 9px;
 }
 
@@ -275,25 +276,25 @@
   gap: 10px;
   margin-top: 21px;
   padding: 12px;
-  border: 1px solid #e9e5d6;
+  border: 1px solid #4a4b41;
   border-radius: 5px;
-  background: #f6f4eb;
+  background: #30312b;
 }
 
 .security-note > span {
-  color: #a58d44;
+  color: #d8c272;
   font-size: 18px;
 }
 
 .security-note p {
   margin: 0;
-  color: #85877e;
+  color: #c2c3b9;
   font-size: 8px;
   line-height: 1.65;
 }
 
 .security-note strong {
-  color: #535a4f;
+  color: #f1eee3;
   font-size: 9px;
 }
 
@@ -302,7 +303,7 @@
   margin-top: 20px;
   padding: 0;
   border: 0;
-  color: #85877c;
+  color: #c2c3b9;
   background: transparent;
   font-size: 9px;
   text-align: center;
@@ -311,7 +312,7 @@
 }
 
 .sign-out-link:hover {
-  color: #88753f;
+  color: #e7d48a;
 }
 
 .content-footer {
@@ -321,7 +322,7 @@
   left: 9%;
   display: flex;
   justify-content: space-between;
-  color: #9b9d94;
+  color: #bfc0b6;
   font-size: 8px;
 }
 

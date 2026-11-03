@@ -1,41 +1,80 @@
 <div class="member-shell">
-  <aside class="member-sidebar">
+  <aside class="member-sidebar" [class.mobile-open]="menuOpen">
     <a class="member-brand" routerLink="/portal">
       <img src="imagem/logo.png" width="48" alt="logo spirit embassy">
       <span><strong>SPIRIT EMBASSY</strong><small>MEMBER PORTAL</small></span>
     </a>
     <div class="member-context"><span class="context-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"></circle><path d="M3.8 12h16.4M12 3.5c2.2 2.3 3.3 5.1 3.3 8.5s-1.1 6.2-3.3 8.5c-2.2-2.3-3.3-5.1-3.3-8.5s1.1-6.2 3.3-8.5Z"></path></svg></span><span><strong>The Goodnews World</strong><small>Lagos Central Branch</small></span><span class="context-chevron" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m7 10 5 5 5-5"></path></svg></span></div>
     <div class="member-nav-title">YOUR COMMUNITY</div>
-    <nav class="member-nav" aria-label="Member portal">
+    <nav id="member-side-navigation" class="member-nav" aria-label="Member portal">
       <a routerLink="/portal" routerLinkActive="selected" [routerLinkActiveOptions]="{ exact: true }" (click)="closeMenu()"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m3.5 10 8.5-7 8.5 7v10.5H3.5V10Z"></path><path d="M9 20.5v-7h6v7"></path></svg></span> Home</a>
-      <a routerLink="/portal/people" routerLinkActive="selected" (click)="closeMenu()"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.3"></circle><path d="M2.8 20v-1.3a5 5 0 0 1 5-5h2.4a5 5 0 0 1 5 5V20"></path><path d="M16 4.9a3.3 3.3 0 0 1 0 6.3m2 2.8a4.5 4.5 0 0 1 3.2 4.3V20"></path></svg></span> Protocol &amp; Security <i>{{ peopleCount }}</i></a>
+      <a routerLink="/portal/people" routerLinkActive="selected" (click)="closeMenu()"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.3"></circle><path d="M2.8 20v-1.3a5 5 0 0 1 5-5h2.4a5 5 0 0 1 5 5V20"></path><path d="M16 4.9a3.3 3.3 0 0 1 0 6.3m2 2.8a4.5 4.5 0 0 1 3.2 4.3V20"></path></svg></span> Protocol &amp; Security</a>
       <a routerLink="/portal/chat" routerLinkActive="selected" (click)="closeMenu()"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H6l-3 2v-6.5A7.5 7.5 0 1 1 20 11.5Z"></path><path d="M8 11h8m-8 3h5"></path></svg></span> Community chat</a>
       <a routerLink="/portal/dress-code" routerLinkActive="selected" (click)="closeMenu()"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8.2 5.3a3.8 3.8 0 0 0 7.6 0"></path><path d="m8.2 5.3-5.3 3 2.2 4 2.1-1.1v9.3h11.6v-9.3l2.1 1.1 2.2-4-5.3-3"></path></svg></span> Dress code</a>
       <a routerLink="/portal/media" routerLinkActive="selected" (click)="closeMenu()"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3.5" y="4" width="17" height="16" rx="2"></rect><circle cx="8.5" cy="9" r="1.5"></circle><path d="m4.5 17 5-5 3.3 3.2 2.2-2.1 4.5 4.4"></path></svg></span> Media library</a>
     </nav>
     <div class="member-sidebar-bottom">
-      <div class="member-help"><strong>Here for you</strong><p>Need help finding your way around?</p><a href="mailto:support@goodnews.world">Contact your administrator ↗</a></div>
+      <div class="member-help"><strong>Here for you</strong><p>Need help finding your way around?</p><button type="button" (click)="openHelp()">Contact your administrator ↗</button></div>
       <div class="member-system"><i></i> Your community is connected</div>
     </div>
   </aside>
+  @if (menuOpen) {
+    <button class="member-menu-backdrop" type="button" aria-label="Close navigation menu" (click)="closeMenu()"></button>
+  }
 
   <main class="member-main">
     <header class="member-topbar">
       <div class="member-breadcrumb"><span>Member portal</span><b>/</b><strong>THE GOODNEWS WORLD</strong></div>
       <div class="member-top-actions">
-        <span class="member-date">MONDAY, OCTOBER 26, 2026</span>
+        <span class="member-date">{{ systemDateLabel }}</span>
         <button class="member-notice" type="button" aria-label="Notifications"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path><path d="M10 21h4"></path></svg><i></i></button>
         <span class="member-top-divider"></span>
         <div class="member-account">
           <span class="member-avatar">@if (session.memberAvatar) { <img [src]="session.memberAvatar" alt=""> } @else { <img src="imagem/logo.png" alt=""> }</span>
-          <span><strong>{{ session.memberName }}</strong><small>Member · Lagos Central</small></span>
+          <span><strong>{{ session.memberName }}</strong><small>{{ session.accountRole }} · {{ session.accountLocation }}</small></span>
           <button class="account-menu-button" type="button" aria-label="Open profile menu" (click)="menuOpen = !menuOpen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"></path></svg></button>
           @if (menuOpen) { <div class="account-menu"><a routerLink="/portal/profile" (click)="closeMenu()">My profile</a><button type="button" (click)="session.signOut()">Sign out</button></div> }
         </div>
       </div>
-      <div class="mobile-member-brand"><img src="imagem/logo.png" width="48" alt="logo spirit embassy"><strong>SPIRIT EMBASSY</strong><a class="mobile-chat-link" routerLink="/portal/chat" aria-label="Community chat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H6l-3 2v-6.5A7.5 7.5 0 1 1 20 11.5Z"></path><path d="M8 11h8m-8 3h5"></path></svg></a><button type="button" aria-label="Sign out" (click)="session.signOut()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 4H5.5A1.5 1.5 0 0 0 4 5.5v13A1.5 1.5 0 0 0 5.5 20H10"></path><path d="M14 16l4-4-4-4m4 4H9"></path></svg></button></div>
+      <div class="mobile-member-brand"><button class="member-hamburger" type="button" [attr.aria-expanded]="menuOpen" aria-controls="member-side-navigation" [attr.aria-label]="menuOpen ? 'Close navigation menu' : 'Open navigation menu'" (click)="menuOpen = !menuOpen"><svg viewBox="0 0 24 24" aria-hidden="true">@if (menuOpen) { <path d="m6 6 12 12M18 6 6 18"></path> } @else { <path d="M4 6h16M4 12h16M4 18h16"></path> }</svg></button><img src="imagem/logo.png" width="48" alt="logo spirit embassy"><strong>SPIRIT EMBASSY</strong><a class="mobile-chat-link" routerLink="/portal/chat" aria-label="Community chat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H6l-3 2v-6.5A7.5 7.5 0 1 1 20 11.5Z"></path><path d="M8 11h8m-8 3h5"></path></svg></a><button type="button" aria-label="Sign out" (click)="session.signOut()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 4H5.5A1.5 1.5 0 0 0 4 5.5v13A1.5 1.5 0 0 0 5.5 20H10"></path><path d="M14 16l4-4-4-4m4 4H9"></path></svg></button></div>
     </header>
     <div class="member-page"><router-outlet /></div>
-    <footer class="member-footer"><span>© 2026 The Goodnews World</span><span>Growing together, wherever we gather <b>✳</b></span><a routerLink="/portal/profile">Your account</a></footer>
+    <footer class="member-footer"><span>© {{ systemYear }} The Goodnews World</span><span>{{ systemDateLabel }}</span><span>Growing together, wherever we gather <b>✳</b></span><a routerLink="/portal/profile">Your account</a></footer>
   </main>
+  @if (showHelpModal) {
+    <div class="member-help-backdrop" (click)="closeHelp()">
+      <section class="member-help-modal" role="dialog" aria-modal="true" aria-labelledby="member-help-title" (click)="$event.stopPropagation()">
+        <header class="member-help-heading">
+          <div><div class="help-kicker">PRIVATE SUPPORT</div><h2 id="member-help-title">Contact your administrator</h2><p>Your name, email and location are attached to help your administrator respond.</p></div>
+          <button type="button" aria-label="Close help window" (click)="closeHelp()">×</button>
+        </header>
+        <p class="member-help-privacy">Only Admins responsible for your location can view and respond to this request. It is not posted in the community directory or chat.</p>
+        <form class="member-help-form" (submit)="submitHelpRequest($event)">
+          <label>Title<input required maxlength="120" [value]="helpTitle" (input)="helpTitle = $any($event.target).value" placeholder="What do you need help with?"></label>
+          <label>Message<textarea required maxlength="4000" rows="4" [value]="helpMessage" (input)="helpMessage = $any($event.target).value" placeholder="Describe your request"></textarea></label>
+          <div class="member-help-form-footer"><small>Sending as {{ session.memberName }} · {{ session.accountLocation }}</small><button type="submit">Send private request</button></div>
+        </form>
+        @if (helpError) { <p class="member-help-error" role="alert">{{ helpError }}</p> }
+        @if (helpNotice) { <p class="member-help-success" role="status">{{ helpNotice }}</p> }
+        <section class="member-help-history">
+          <h3>My help requests</h3>
+          @for (request of helpRequests; track request.id) {
+            <article class="member-help-request">
+              <div class="member-help-request-heading"><strong>{{ request.title }}</strong><span [class.resolved]="request.status === 'Resolved'">{{ request.status }}</span></div>
+              <p>{{ request.message }}</p>
+              <small>Submitted {{ request.createdAt | date:'medium' }}</small>
+              @for (response of request.responses; track response.id) {
+                <div class="member-help-response"><strong>Reply from {{ response.responderName }}</strong><p>{{ response.message }}</p><small>{{ response.sentAt | date:'medium' }}</small></div>
+              } @empty {
+                <small class="member-help-waiting">An administrator has not replied yet.</small>
+              }
+            </article>
+          } @empty {
+            <p class="member-help-no-requests">You have not sent a help request yet.</p>
+          }
+        </section>
+        <p class="member-help-storage-note">Prototype: requests are saved in this browser only. Cross-device delivery requires the organisation’s support service.</p>
+      </section>
+    </div>
+  }
 </div>

@@ -1,11 +1,13 @@
 import { Injectable, inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { FirstLoginState } from './first-login-state';
+import { MemberDirectory } from './member-directory';
 
 @Injectable({ providedIn: 'root' })
 export class PortalSession {
   private readonly router = inject(Router);
   private readonly firstLoginState = inject(FirstLoginState);
+  private readonly memberDirectory = inject(MemberDirectory);
   memberName = '';
   memberEmail = '';
   memberAvatar = '';
@@ -14,8 +16,10 @@ export class PortalSession {
 
   signIn(email: string): void {
     this.memberEmail = email.trim();
-    this.requiresPasswordChange = !this.firstLoginState.hasCompleted('member', this.memberEmail);
-    const name = this.memberEmail.split('@')[0]?.replace(/[._-]+/g, ' ') ?? '';
+    const account = this.memberDirectory.findByEmail(this.memberEmail);
+    const loginType = account && this.memberDirectory.isAdminAccount(account) ? 'admin' : 'member';
+    this.requiresPasswordChange = !this.firstLoginState.hasCompleted(loginType, this.memberEmail);
+    const name = account?.name ?? this.memberEmail.split('@')[0]?.replace(/[._-]+/g, ' ') ?? '';
     const defaultName = name.replace(/\b\w/g, (letter) => letter.toUpperCase()) || 'Member';
     const profile = this.readProfile(this.memberEmail);
     this.memberName = profile?.name ?? defaultName;
@@ -68,8 +72,31 @@ export class PortalSession {
   }
 
   completeFirstLogin(): void {
-    this.firstLoginState.markCompleted('member', this.memberEmail);
+    const account = this.memberDirectory.findByEmail(this.memberEmail);
+    const loginType = account && this.memberDirectory.isAdminAccount(account) ? 'admin' : 'member';
+    this.firstLoginState.markCompleted(loginType, this.memberEmail);
     this.requiresPasswordChange = false;
+  }
+
+  get accountRole(): string {
+    const account = this.memberDirectory.findByEmail(this.memberEmail);
+    switch (account?.accountType) {
+      case 'global-admin':
+        return 'Global Admin';
+      case 'regional-admin':
+        return 'Regional Admin';
+      case 'local-admin':
+        return 'Local Admin';
+      case 'admin':
+        return account.scope === 'Global' ? 'Global Admin' : account.scope === 'Regional' ? 'Regional Admin' : 'Local Admin';
+      default:
+        return account?.role ?? 'Member';
+    }
+  }
+
+  get accountLocation(): string {
+    const account = this.memberDirectory.findByEmail(this.memberEmail);
+    return [account?.city, account?.country].filter(Boolean).join(' · ') || 'Community member';
   }
 
   signOut(): void {
@@ -78,6 +105,9 @@ export class PortalSession {
   }
 
   clearSession(): void {
+    if (this.memberEmail) {
+      this.memberDirectory.recordSuccessfulSignOut(this.memberEmail, 'Member');
+    }
     this.memberName = '';
     this.memberEmail = '';
     this.memberAvatar = '';
