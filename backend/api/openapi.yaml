@@ -1,0 +1,242 @@
+openapi: 3.1.0
+info:
+  title: Spirit Embassy Protocol & Security API
+  version: 1.0.0
+  description: API foundation with short-lived JWT access tokens and rotating refresh tokens.
+servers:
+  - url: /api/v1
+components:
+  securitySchemes:
+    refreshCookie:
+      type: apiKey
+      in: cookie
+      name: spirit_embassy_session
+    bearerAccessToken:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Error:
+      type: object
+      required: [code, message]
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    ScopeAssignment:
+      type: object
+      required: [type]
+      properties:
+        type:
+          type: string
+          enum: [global, country, region, branch]
+        countryId:
+          type: string
+          format: uuid
+        regionId:
+          type: string
+          format: uuid
+        branchId:
+          type: string
+          format: uuid
+    Account:
+      type: object
+      required: [id, email, displayName, status, preferredLanguage, timezone, roles, assignments]
+      properties:
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+          format: email
+        displayName:
+          type: string
+        status:
+          type: string
+          enum: [invited, active, blocked, disabled]
+        preferredLanguage:
+          type: string
+        timezone:
+          type: string
+        roles:
+          type: array
+          items:
+            type: string
+        assignments:
+          type: array
+          items:
+            $ref: "#/components/schemas/ScopeAssignment"
+    AuthResponse:
+      type: object
+      required: [account, expiresAt]
+      properties:
+        account:
+          $ref: "#/components/schemas/Account"
+        accessToken:
+          type: string
+          description: Short-lived JWT; returned only by login and refresh.
+        csrfToken:
+          type: string
+          description: Required with the refresh cookie when refreshing or logging out.
+        expiresAt:
+          type: string
+          format: date-time
+    LoginRequest:
+      type: object
+      additionalProperties: false
+      required: [email, password]
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+paths:
+  /auth/login:
+    post:
+      summary: Authenticate and create access and refresh tokens
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+      responses:
+        "200":
+          description: Returns a short-lived JWT and sets a refresh token in an HttpOnly cookie.
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        "400":
+          description: Invalid request body.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "401":
+          description: Credentials are invalid or the account is unavailable.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "429":
+          description: The account or client IP exceeded the sign-in attempt limit.
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "503":
+          description: Authentication or Redis-backed login protection is unavailable.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "503":
+          description: Authentication is not configured.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /auth/me:
+    get:
+      summary: Get the current account
+      security:
+        - bearerAccessToken: []
+      responses:
+        "200":
+          description: Authenticated account.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        "401":
+          description: Access token is missing, invalid, or expired.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /auth/refresh:
+    post:
+      summary: Rotate a refresh token and issue a new access JWT
+      security:
+        - refreshCookie: []
+      parameters:
+        - in: header
+          name: X-CSRF-Token
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Refresh token rotated; new access token returned.
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        "401":
+          description: Refresh token is missing, invalid, or expired.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: CSRF token is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /auth/logout:
+    post:
+      summary: Revoke the current session
+      security:
+        - refreshCookie: []
+      parameters:
+        - in: header
+          name: X-CSRF-Token
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Session revoked.
+        "401":
+          description: Session is missing, invalid, or expired.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: CSRF token is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /health/live:
+    get:
+      summary: Liveness probe
+      responses:
+        "200":
+          description: The process is responding.
+  /health/ready:
+    get:
+      summary: Readiness probe
+      responses:
+        "200":
+          description: Required dependencies are ready.
+        "503":
+          description: A required dependency is unavailable.

@@ -22,6 +22,10 @@ Open `http://localhost:4200/`.
 npm run build
 ```
 
+## Backend (Go)
+
+The Go backend foundation is in [`backend/`](./backend/README.md). It uses PostgreSQL, Redis, Docker Compose, embedded versioned migrations, and health/readiness endpoints. Authentication and the member/Admin features are still under implementation; do not use this prototype with real member credentials or data.
+
 All screen data is illustrative. Sign-in and route protection are a local front-end demonstration only; authentication, authorization, persistent storage, live audit events, file uploads, and API integration are not connected yet. The MVP's first language is English, and content access is intended to follow global, regional, or local/branch scope and the user's role. The prototype layout follows the shared [Figma design](https://www.figma.com/design/hiQDYz9pKWN66tRw7frUut/spirit-embassy?node-id=0-1&p=f&t=kX9FmJrMlBgsNxiu-0).
 
 ## Hero photo credits
